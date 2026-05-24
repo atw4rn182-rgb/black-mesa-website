@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="prefetch" href="assets/bull-skull-wide.mp4" as="video" media="(min-width: 1024px)">
-  <link rel="preload" href="assets/bull-skull-poster.jpg" as="image" media="(max-width: 1023px)">
+  <link rel="preload" href="assets/bull-skull.mp4" as="video" media="(max-width: 768px)">
+  <link rel="prefetch" href="assets/bull-skull-wide.mp4" as="video" media="(min-width: 769px)">
   <script src="transition.js"></script>
   <style>
     .work-tabs {
@@ -25,25 +25,28 @@
 </head>
 <body class="work-page">
   <div class="work-bg" aria-hidden="true">
-    <img
-      class="work-bg-poster"
-      src="assets/bull-skull-poster.jpg"
-      alt=""
-      decoding="async"
-      fetchpriority="high"
-    >
-    <div class="work-bg-overlay"></div>
+    <div class="page-bg-overlay"></div>
     <video
-      class="work-bg-video work-bg-video--wide"
-      id="heroVideo"
+      class="page-bg-video page-bg-video--portrait"
+      id="heroVideoPortrait"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    >
+      <source src="assets/bull-skull.mp4" type="video/mp4">
+    </video>
+    <video
+      class="page-bg-video page-bg-video--landscape"
+      id="heroVideoLandscape"
       autoplay
       muted
       loop
       playsinline
       preload="none"
-      poster="assets/bull-skull-poster.jpg"
     >
-      <source src="assets/bull-skull-wide.mp4" type="video/mp4">
+      <source data-src="assets/bull-skull-wide.mp4" type="video/mp4">
     </video>
   </div>
 
@@ -111,6 +114,7 @@
     </div>
   </div>
 
+  <script src="bg-video.js"></script>
   <script src="work.js"></script>
 </body>
 </html>

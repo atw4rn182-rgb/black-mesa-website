@@ -5,22 +5,10 @@
   const btnWork = document.getElementById("btnWork");
   const navQuote = document.getElementById("navQuote");
   const navWork = document.getElementById("navWork");
-  const heroVideo = document.getElementById("heroVideo");
+  const portraitVideo = document.getElementById("heroVideoPortrait");
+  const landscapeVideo = document.getElementById("heroVideoLandscape");
 
-  function initVideo() {
-    if (!heroVideo) return;
-    heroVideo.muted = true;
-    heroVideo.setAttribute("playsinline", "");
-    const play = () => heroVideo.play().catch(() => {});
-    play();
-    document.addEventListener(
-      "touchstart",
-      () => {
-        if (heroVideo.paused) play();
-      },
-      { once: true, passive: true }
-    );
-  }
+  const bgVideos = { portrait: portraitVideo, landscape: landscapeVideo };
 
   function navigateWithFade(link) {
     if (!link) return;
@@ -53,5 +41,16 @@
   navigateWithFade(navWork);
   navigateWithFade(navQuote);
 
-  initVideo();
+  window.bmBgVideo?.syncBackgroundVideos(bgVideos);
+
+  document.addEventListener(
+    "touchstart",
+    () => {
+      const active = window.bmBgVideo?.isDesktopBg()
+        ? landscapeVideo
+        : portraitVideo;
+      if (active?.paused) window.bmBgVideo?.initVideo(active);
+    },
+    { once: true, passive: true }
+  );
 })();

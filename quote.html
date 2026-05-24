@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="prefetch" href="assets/campfire-wide.mp4" as="video" media="(min-width: 480px)">
-  <link rel="preload" href="assets/campfire-poster.jpg" as="image" media="(max-width: 479px)">
+  <link rel="preload" href="assets/campfire.mp4" as="video" media="(max-width: 768px)">
+  <link rel="prefetch" href="assets/campfire-wide.mp4" as="video" media="(min-width: 769px)">
   <script src="transition.js"></script>
 </head>
 <body class="quote-page">
@@ -21,25 +21,28 @@
   <main>
     <section class="hero quote-hero" id="quote">
       <div class="quote-bg" aria-hidden="true">
-        <img
-          class="quote-bg-poster"
-          src="assets/campfire-poster.jpg"
-          alt=""
-          decoding="async"
-          fetchpriority="high"
-        >
-        <div class="quote-bg-overlay"></div>
+        <div class="page-bg-overlay"></div>
         <video
-          class="quote-bg-video"
-          id="quoteVideo"
+          class="page-bg-video page-bg-video--portrait"
+          id="quoteVideoPortrait"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        >
+          <source src="assets/campfire.mp4" type="video/mp4">
+        </video>
+        <video
+          class="page-bg-video page-bg-video--landscape"
+          id="quoteVideoLandscape"
           autoplay
           muted
           loop
           playsinline
           preload="none"
-          poster="assets/campfire-poster.jpg"
         >
-          <source src="assets/campfire-wide.mp4" type="video/mp4">
+          <source data-src="assets/campfire-wide.mp4" type="video/mp4">
         </video>
       </div>
 
@@ -89,6 +92,7 @@
     </section>
   </main>
 
+  <script src="bg-video.js"></script>
   <script src="quote.js"></script>
 </body>
 </html>

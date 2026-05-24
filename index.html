@@ -9,7 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="prefetch" href="assets/bull-skull.mp4" as="video">
+  <link rel="preload" href="assets/hero-desert.mp4" as="video" media="(max-width: 768px)">
+  <link rel="prefetch" href="assets/hero-desert-wide.mp4" as="video" media="(min-width: 769px)">
+  <link rel="prefetch" href="assets/bull-skull-wide.mp4" as="video">
   <script src="transition.js"></script>
 </head>
 <body class="home-page">
@@ -22,33 +24,44 @@
 
   <main>
     <section class="hero" id="hero">
-      <div class="hero-media">
-        <div class="hero-video-frame">
-          <video
-            class="hero-video"
-            id="heroVideo"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-          >
-            <source src="assets/hero-desert.mp4" type="video/mp4">
-          </video>
+      <div class="hero-media" aria-hidden="true">
+        <div class="page-bg-overlay"></div>
+        <video
+          class="page-bg-video page-bg-video--portrait"
+          id="heroVideoPortrait"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        >
+          <source src="assets/hero-desert.mp4" type="video/mp4">
+        </video>
+        <video
+          class="page-bg-video page-bg-video--landscape"
+          id="heroVideoLandscape"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+        >
+          <source data-src="assets/hero-desert-wide.mp4" type="video/mp4">
+        </video>
+      </div>
 
-          <div class="hero-cta-layer" aria-label="Primary actions">
-            <a href="work.html" class="hero-cta hero-cta--work btn-metallic" id="btnWork">
-              View Our Work
-            </a>
-            <a href="quote.html" class="hero-cta hero-cta--quote btn-metallic" id="btnQuote">
-              Get a Quote
-            </a>
-          </div>
-        </div>
+      <div class="hero-cta-layer" aria-label="Primary actions">
+        <a href="work.html" class="hero-cta hero-cta--work btn-metallic" id="btnWork">
+          View Our Work
+        </a>
+        <a href="quote.html" class="hero-cta hero-cta--quote btn-metallic" id="btnQuote">
+          Get a Quote
+        </a>
       </div>
     </section>
   </main>
 
+  <script src="bg-video.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

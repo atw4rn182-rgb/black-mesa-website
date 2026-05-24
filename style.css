@@ -25,10 +25,6 @@
   --page-fade-in-delay: 0.06s;
   --video-transition: 1.4s var(--ease-cinematic);
   --header-h: 4.5rem;
-  /* Portrait background videos (9:16) — scale up on wide screens to shrink side bars */
-  --bg-video-ar-w: 9;
-  --bg-video-ar-h: 16;
-  --bg-video-wide-scale: 1;
 }
 
 html {
@@ -44,71 +40,86 @@ body {
   min-height: 100dvh;
 }
 
-/* ── Hero video — portrait frame, wider on desktop (shared with work page) ─ */
-.hero-media {
+/* ── Dual background videos (9:16 mobile, 16:9 desktop) ─────── */
+.hero-media,
+.work-bg,
+.quote-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
   overflow: hidden;
   background: #080808;
-}
-
-/* 9:16 frame — buttons live inside, on the video */
-.hero-video-frame {
-  position: relative;
-  aspect-ratio: var(--bg-video-ar-w) / var(--bg-video-ar-h);
-  height: 100%;
-  max-height: 100%;
-  max-width: 100%;
-  width: auto;
-}
-
-.hero-video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center top;
   pointer-events: none;
 }
 
-/* Wide landscape — scale video wider; vertical overflow clips, aspect ratio kept */
-@media (min-width: 768px) and (min-aspect-ratio: 4/3) {
-  :root {
-    --bg-video-wide-scale: 1.38;
-  }
+.work-bg {
+  position: fixed;
+}
 
-  .hero-video-frame {
-    height: auto;
-    width: min(
-      100vw,
-      calc(
-        100dvh * var(--bg-video-ar-w) / var(--bg-video-ar-h) *
-          var(--bg-video-wide-scale)
-      )
+.page-bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(6, 6, 8, 0.52) 0%,
+      rgba(6, 6, 8, 0.18) 38%,
+      rgba(6, 6, 8, 0.22) 62%,
+      rgba(6, 6, 8, 0.58) 100%
+    ),
+    radial-gradient(
+      ellipse 90% 70% at 50% 42%,
+      transparent 0%,
+      rgba(0, 0, 0, 0.32) 100%
     );
-    max-height: 100dvh;
-  }
 }
 
-@media (min-width: 1200px) and (min-aspect-ratio: 4/3) {
-  :root {
-    --bg-video-wide-scale: 1.55;
-  }
+.quote-bg .page-bg-overlay {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(6, 6, 8, 0.55) 0%,
+      rgba(6, 6, 8, 0.2) 40%,
+      rgba(6, 6, 8, 0.28) 70%,
+      rgba(6, 6, 8, 0.62) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.12) 42%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
 }
 
-@media (min-width: 1600px) and (min-aspect-ratio: 4/3) {
-  :root {
-    --bg-video-wide-scale: 1.72;
-  }
+.page-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
 }
 
-@media (min-width: 1920px) and (min-aspect-ratio: 16/9) {
-  :root {
-    --bg-video-wide-scale: 1.88;
+.page-bg-video--portrait {
+  display: block;
+  z-index: 0;
+}
+
+.page-bg-video--landscape {
+  display: none;
+  z-index: 0;
+}
+
+@media (min-width: 769px) {
+  .page-bg-video--portrait {
+    display: none;
+  }
+
+  .page-bg-video--landscape {
+    display: block;
   }
 }
 
@@ -128,7 +139,7 @@ body {
 .home-page .hero-cta-layer {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -453,7 +464,7 @@ body {
 /* ── Reduced motion ───────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero-video,
+  .page-bg-video,
   .hero-cta,
   .scroll-hint,
   .form-success {
@@ -499,11 +510,7 @@ body {
 }
 
 /* ── Page transitions (crossfade between background videos) ─── */
-html.bm-pre-enter .hero-video,
-html.bm-pre-enter .work-bg-video,
-html.bm-pre-enter .work-bg-poster,
-html.bm-pre-enter .quote-bg-video,
-html.bm-pre-enter .quote-bg-poster {
+html.bm-pre-enter .page-bg-video {
   opacity: 0;
 }
 
@@ -543,11 +550,9 @@ body.page-enter::after {
 
 /* Exit — fade out current page video + UI */
 body.page-exit .hero-media,
-body.page-exit .hero-video-frame,
-body.page-exit .hero-video,
-.work-page.page-exit .work-bg,
-.work-page.page-exit .work-bg-video,
-.work-page.page-exit .work-bg-poster {
+body.page-exit .work-bg,
+body.page-exit .quote-bg,
+body.page-exit .page-bg-video {
   opacity: 0;
   transition: opacity var(--page-fade-out-duration) var(--ease-fade);
 }
@@ -558,9 +563,6 @@ body.page-exit .hero-cta,
 .work-page.page-exit .work-tabs,
 .work-page.page-exit .work-content-panel,
 .work-page.page-exit .navbar,
-.quote-page.page-exit .quote-bg,
-.quote-page.page-exit .quote-bg-video,
-.quote-page.page-exit .quote-bg-poster,
 .quote-page.page-exit .navbar,
 .quote-page.page-exit .quote-form-column {
   opacity: 0;
@@ -568,11 +570,7 @@ body.page-exit .hero-cta,
 }
 
 /* Enter — fade in destination background video */
-body.page-enter .hero-video,
-.work-page.page-enter .work-bg-video,
-.work-page.page-enter .work-bg-poster,
-.quote-page.page-enter .quote-bg-video,
-.quote-page.page-enter .quote-bg-poster {
+body.page-enter .page-bg-video {
   opacity: 0;
   animation: videoFadeIn var(--page-fade-in-duration) var(--ease-cinematic)
     var(--page-fade-in-delay) forwards;
@@ -615,16 +613,10 @@ body.page-enter .hero-cta,
   }
 
   body.page-exit .hero-media,
-  body.page-exit .hero-video,
-  .work-page.page-exit .work-bg-video,
-  .work-page.page-exit .work-bg-poster,
-  .quote-page.page-exit .quote-bg-video,
-  .quote-page.page-exit .quote-bg-poster,
-  body.page-enter .hero-video,
-  .work-page.page-enter .work-bg-video,
-  .work-page.page-enter .work-bg-poster,
-  .quote-page.page-enter .quote-bg-video,
-  .quote-page.page-enter .quote-bg-poster {
+  body.page-exit .work-bg,
+  body.page-exit .quote-bg,
+  body.page-exit .page-bg-video,
+  body.page-enter .page-bg-video {
     transition: none;
     animation: none;
     opacity: 1;
@@ -673,67 +665,6 @@ body.page-enter .hero-cta,
   height: 100dvh;
   min-height: 100dvh;
   overflow: hidden;
-}
-
-.quote-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  background: #080808;
-  pointer-events: none;
-}
-
-/* Phones — static poster only (video not loaded) */
-.quote-bg-poster {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-}
-
-.quote-bg-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(6, 6, 8, 0.55) 0%,
-      rgba(6, 6, 8, 0.2) 40%,
-      rgba(6, 6, 8, 0.28) 70%,
-      rgba(6, 6, 8, 0.62) 100%
-    ),
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(0, 0, 0, 0.12) 42%,
-      rgba(0, 0, 0, 0.08) 100%
-    );
-}
-
-.quote-bg-video {
-  display: none;
-}
-
-/* Tablet+ — cinematic widescreen video cover */
-@media (min-width: 480px) {
-  .quote-bg-poster {
-    display: none;
-  }
-
-  .quote-bg-video {
-    display: block;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-  }
 }
 
 /* Transparent form column — left side, video fully visible */
@@ -833,92 +764,10 @@ body.page-enter .hero-cta,
   }
 }
 
-@media (max-width: 479px) {
-  .quote-bg-overlay {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(6, 6, 8, 0.58) 0%,
-        rgba(6, 6, 8, 0.25) 45%,
-        rgba(6, 6, 8, 0.65) 100%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(0, 0, 0, 0.55) 0%,
-        rgba(0, 0, 0, 0.2) 100%
-      );
-  }
-}
-
 /* ── Work page — fixed bg + scrollable project column ─────── */
 .work-page {
   height: 100dvh;
   overflow: hidden;
-}
-
-.work-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  background: #080808;
-  pointer-events: none;
-}
-
-/* Mobile / tablet — cinematic still from widescreen source */
-.work-bg-poster {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-}
-
-.work-bg-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(6, 6, 8, 0.52) 0%,
-      rgba(6, 6, 8, 0.18) 38%,
-      rgba(6, 6, 8, 0.22) 62%,
-      rgba(6, 6, 8, 0.58) 100%
-    ),
-    radial-gradient(
-      ellipse 90% 70% at 50% 42%,
-      transparent 0%,
-      rgba(0, 0, 0, 0.32) 100%
-    );
-}
-
-/* Widescreen video hidden until desktop breakpoint */
-.work-bg-video--wide {
-  display: none;
-}
-
-/* Desktop — full-bleed 16:9 cinematic cover */
-@media (min-width: 1024px) {
-  .work-bg-poster {
-    display: none;
-  }
-
-  .work-bg-video--wide {
-    display: block;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
-    left: 0;
-    transform: none;
-    object-fit: cover;
-    object-position: center center;
-  }
 }
 
 /* Tab buttons — hidden until background loads (see inline style in work.html) */

@@ -2,11 +2,9 @@
   "use strict";
 
   const navHome = document.getElementById("navHome");
-  const heroVideo = document.getElementById("heroVideo");
-  const posterImg = document.querySelector(".work-bg-poster");
-  const WORK_WIDE_VIDEO = "assets/bull-skull-wide.mp4";
-  const WORK_POSTER = "assets/bull-skull-poster.jpg";
-  const DESKTOP_BG_MQ = "(min-width: 1024px)";
+  const portraitVideo = document.getElementById("heroVideoPortrait");
+  const landscapeVideo = document.getElementById("heroVideoLandscape");
+  const bgVideos = { portrait: portraitVideo, landscape: landscapeVideo };
   const tabPhotos = document.getElementById("tabPhotos");
   const tabVideos = document.getElementById("tabVideos");
   const panelPhotos = document.getElementById("panelPhotos");
@@ -65,132 +63,36 @@
     projectVideos.forEach(initVideo);
   }
 
-  function isDesktopWorkBg() {
-    return window.matchMedia(DESKTOP_BG_MQ).matches;
-  }
-
   function waitForBackgroundThenRevealTabs() {
     if (prefersReducedMotion()) {
       revealTabs();
       return;
     }
 
-    let revealed = false;
     const revealAfterDelay = () => {
-      if (revealed) return;
-      revealed = true;
       setTimeout(revealTabs, CLIP_REVEAL_DELAY_MS);
     };
 
-    const fallback = window.setTimeout(() => {
-      revealTabs();
-    }, CLIP_REVEAL_FALLBACK_MS);
+    const fallback = window.setTimeout(revealTabs, CLIP_REVEAL_FALLBACK_MS);
+    const cancelFallback = () => window.clearTimeout(fallback);
 
-    const cancelFallback = () => {
-      window.clearTimeout(fallback);
-    };
-
-    const bg = isDesktopWorkBg() ? heroVideo : posterImg;
-    if (!bg) {
+    window.bmBgVideo?.watchBackgroundVideos(bgVideos, () => {
       cancelFallback();
       revealAfterDelay();
-      return;
-    }
-
-    if (!isDesktopWorkBg() && posterImg) {
-      if (posterImg.complete && posterImg.naturalWidth > 0) {
-        cancelFallback();
-        revealAfterDelay();
-        return;
-      }
-
-      posterImg.addEventListener(
-        "load",
-        () => {
-          cancelFallback();
-          revealAfterDelay();
-        },
-        { once: true }
-      );
-
-      posterImg.addEventListener(
-        "error",
-        () => {
-          cancelFallback();
-          revealTabs();
-        },
-        { once: true }
-      );
-      return;
-    }
-
-    if (heroVideo.readyState >= 2) {
-      cancelFallback();
-      revealAfterDelay();
-      return;
-    }
-
-    heroVideo.addEventListener(
-      "loadeddata",
-      () => {
-        cancelFallback();
-        revealAfterDelay();
-      },
-      { once: true }
-    );
-
-    heroVideo.addEventListener(
-      "error",
-      () => {
-        cancelFallback();
-        revealTabs();
-      },
-      { once: true }
-    );
-  }
-
-  async function initMobilePoster() {
-    if (!posterImg || isDesktopWorkBg()) return;
-
-    const applyThumb = async () => {
-      const thumb = await captureVideoThumb(WORK_WIDE_VIDEO, { preload: "metadata" });
-      if (thumb) posterImg.src = thumb;
-    };
-
-    if (posterImg.complete && posterImg.naturalWidth > 0) return;
-
-    posterImg.addEventListener(
-      "error",
-      () => {
-        applyThumb();
-      },
-      { once: true }
-    );
-
-    if (!posterImg.getAttribute("src")) {
-      posterImg.src = WORK_POSTER;
-    }
-  }
-
-  function initWorkBackground() {
-    if (isDesktopWorkBg()) {
-      if (heroVideo) {
-        heroVideo.preload = "auto";
-        initVideo(heroVideo);
-      }
-      return;
-    }
-    initMobilePoster();
+    });
   }
 
   function initPageVideos() {
-    initWorkBackground();
+    window.bmBgVideo?.syncBackgroundVideos(bgVideos);
     waitForBackgroundThenRevealTabs();
 
     document.addEventListener(
       "touchstart",
       () => {
-        if (heroVideo?.paused) initVideo(heroVideo);
+        const active = window.bmBgVideo?.isDesktopBg()
+          ? landscapeVideo
+          : portraitVideo;
+        if (active?.paused) initVideo(active);
         projectVideos.forEach((v) => {
           if (v.paused) initVideo(v);
         });
