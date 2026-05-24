@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Request a quote from Black Mesa Welding & Machining.">
+  <title>Get a Quote — Black Mesa Welding & Machining</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="prefetch" href="assets/campfire.mp4">
+  <script src="transition.js"></script>
+</head>
+<body class="quote-page">
+  <header class="navbar">
+    <a href="index.html" class="nav-link" id="navHome">Home</a>
+  </header>
+
+  <main>
+    <section class="hero quote-hero" id="quote">
+      <div class="hero-media">
+        <div class="hero-video-frame">
+          <video
+            class="hero-video"
+            id="quoteVideo"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+          >
+            <source src="assets/campfire.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="quote-form-column">
+        <div class="quote-form-header">
+          <h2>Get a Quote</h2>
+          <p>Tell us about your project. We respond within one business day.</p>
+        </div>
+
+        <form class="quote-form" id="quoteForm" novalidate>
+          <div class="form-row">
+            <label for="quote-name">Name</label>
+            <input type="text" id="quote-name" name="name" required autocomplete="name" placeholder="Your name">
+          </div>
+          <div class="form-row">
+            <label for="quote-email">Email</label>
+            <input type="email" id="quote-email" name="email" required autocomplete="email" placeholder="you@email.com">
+          </div>
+          <div class="form-row">
+            <label for="quote-phone">Phone</label>
+            <input type="tel" id="quote-phone" name="phone" required autocomplete="tel" placeholder="(555) 000-0000">
+          </div>
+          <div class="form-row">
+            <label for="quote-service">Service Needed</label>
+            <select id="quote-service" name="service" required>
+              <option value="" disabled selected>Select a service</option>
+              <option value="welding">Welding &amp; Fabrication</option>
+              <option value="machining">CNC Machining</option>
+              <option value="repair">Repair &amp; Restoration</option>
+              <option value="custom">Custom Project</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="quote-description">Project Description</label>
+            <textarea id="quote-description" name="description" rows="5" required placeholder="Describe your project, timeline, materials…"></textarea>
+          </div>
+          <button type="submit" class="btn btn-submit">Submit Quote Request</button>
+        </form>
+
+        <div class="form-success quote-form-success" id="quoteFormSuccess" role="status" aria-live="polite" hidden>
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <h3>Quote Request Sent</h3>
+          <p>Thanks for reaching out. A Black Mesa specialist will contact you shortly.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="quote.js"></script>
+</body>
+</html>

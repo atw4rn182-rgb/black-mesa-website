@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Black Mesa Welding & Machining — view our work and fabrication projects.">
+  <title>Our Work — Black Mesa Welding & Machining</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="prefetch" href="assets/bull-skull.mp4">
+  <script src="transition.js"></script>
+  <style>
+    .work-tabs {
+      position: fixed;
+      top: 22vh;
+      left: 50%;
+      transform: translateX(-50%) translateY(14px) scale(0.96);
+      z-index: 5;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body class="work-page">
+  <div class="work-bg" aria-hidden="true">
+    <video
+      class="work-bg-video"
+      id="heroVideo"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    >
+      <source src="assets/bull-skull.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <header class="navbar">
+    <a href="index.html" class="nav-link" id="navHome">Home</a>
+  </header>
+
+  <div class="work-tabs" role="tablist" aria-label="Work gallery type">
+    <button type="button" class="work-tab" id="tabPhotos" role="tab" aria-selected="false" aria-controls="panelPhotos">
+      Photos
+    </button>
+    <button type="button" class="work-tab" id="tabVideos" role="tab" aria-selected="false" aria-controls="panelVideos">
+      Videos
+    </button>
+  </div>
+
+  <div class="work-content-panel" id="workContentPanel" hidden>
+    <div class="work-photos-panel" id="workPhotosPanel" role="tabpanel" aria-labelledby="tabPhotos" hidden>
+      <div class="work-media-grid" id="panelPhotos"></div>
+    </div>
+
+    <div class="work-videos-panel" id="workVideosPanel" role="tabpanel" aria-labelledby="tabVideos" hidden>
+      <div class="work-media-grid" id="panelVideos">
+        <article class="media-grid-item media-grid-item--video">
+          <video class="project-video" autoplay muted loop playsinline preload="auto">
+            <source src="assets/projects/project-01.mp4" type="video/mp4">
+          </video>
+        </article>
+        <article class="media-grid-item media-grid-item--video">
+          <video class="project-video" autoplay muted loop playsinline preload="auto">
+            <source src="assets/projects/project-02.mp4" type="video/mp4">
+          </video>
+        </article>
+        <article class="media-grid-item media-grid-item--video">
+          <video class="project-video" autoplay muted loop playsinline preload="auto">
+            <source src="assets/projects/project-03.mp4" type="video/mp4">
+          </video>
+        </article>
+        <article class="media-grid-item media-grid-item--video">
+          <video class="project-video" autoplay muted loop playsinline preload="auto">
+            <source src="assets/projects/project-04.mp4" type="video/mp4">
+          </video>
+        </article>
+        <article class="media-grid-item media-grid-item--video">
+          <video class="project-video" autoplay muted loop playsinline preload="auto">
+            <source src="assets/projects/project-05.mp4" type="video/mp4">
+          </video>
+        </article>
+        <article class="media-grid-item media-grid-item--video">
+          <video class="project-video" autoplay muted loop playsinline preload="auto">
+            <source src="assets/projects/project-06.mp4" type="video/mp4">
+          </video>
+        </article>
+        <article class="media-grid-item media-grid-item--video">
+          <video class="project-video" autoplay muted loop playsinline preload="auto">
+            <source src="assets/projects/project-07.mp4" type="video/mp4">
+          </video>
+        </article>
+        <article class="media-grid-item media-grid-item--video">
+          <video class="project-video" autoplay muted loop playsinline preload="auto">
+            <source src="assets/projects/project-08.mp4" type="video/mp4">
+          </video>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <script src="work.js"></script>
+</body>
+</html>

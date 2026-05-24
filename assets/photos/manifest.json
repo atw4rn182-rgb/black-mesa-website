@@ -1,0 +1,23 @@
+{
+    "featured":  [
+                     "assets/photos/bmmetalfeature (1).png",
+                     "assets/photos/bmmetalfeature (2).png",
+                     "assets/photos/bmmetalfeature.png",
+                     "assets/photos/bmtrailerfeature.png",
+                     "assets/photos/bmtruckfeature.png"
+                 ],
+    "photos":  [
+                   "assets/photos/bmfence (1).png",
+                   "assets/photos/bmfence.png",
+                   "assets/photos/IMG_20260523_125611 (11).png",
+                   "assets/photos/IMG_20260523_125611 (2).png",
+                   "assets/photos/IMG_20260523_125611 (3).png",
+                   "assets/photos/IMG_20260523_125611 (4).png",
+                   "assets/photos/IMG_20260523_125611 (6).png",
+                   "assets/photos/IMG_20260523_125611.png",
+                   "assets/photos/IMG_20260523_125620 (4).png",
+                   "assets/photos/IMG_20260523_125632 (8).png",
+                   "assets/photos/IMG_20260523_125645 (10).png",
+                   "assets/photos/IMG_20260523_125645 (7).png"
+               ]
+}

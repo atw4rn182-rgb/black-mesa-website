@@ -1,0 +1,7 @@
+{
+    "name": "black-mesa-welding",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "cp -r * out/ 2>/dev/null || true"
+    }
+  }
