@@ -1,0 +1,28 @@
+# Netlify — Black Mesa Welding & Machining
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  publish = "."
+  command = "echo 'No build required'"
+
+# 1. Force HTTP → HTTPS
+[[redirects]]
+  from = "/*"
+  to = "https://%{HTTP_HOST}/:splat"
+  status = 301
+  force = true
+  conditions = {Scheme = ["http"]}
+
+# 2–3. HSTS and recommended security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    X-DNS-Prefetch-Control = "off"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; upgrade-insecure-requests"
