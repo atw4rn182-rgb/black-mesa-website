@@ -12,7 +12,14 @@
   <link rel="prefetch" href="assets/bull-skull.mp4" as="video">
   <script src="transition.js"></script>
 </head>
-<body>
+<body class="home-page">
+  <header class="navbar">
+    <nav class="home-nav" aria-label="Main navigation">
+      <a href="work.html" class="nav-link" id="navWork">View Our Work</a>
+      <a href="quote.html" class="nav-link" id="navQuote">Get a Quote</a>
+    </nav>
+  </header>
+
   <main>
     <section class="hero" id="hero">
       <div class="hero-media">
@@ -30,72 +37,17 @@
           </video>
 
           <div class="hero-cta-layer" aria-label="Primary actions">
-            <a href="work.html" class="hero-cta hero-cta--work" id="btnWork">
+            <a href="work.html" class="hero-cta btn-metallic" id="btnWork">
               View Our Work
             </a>
-            <a href="quote.html" class="hero-cta hero-cta--quote" id="btnQuote">
+            <a href="quote.html" class="hero-cta btn-metallic" id="btnQuote">
               Get a Quote
             </a>
           </div>
         </div>
       </div>
-
-      <a href="#contact" class="scroll-hint" aria-label="Scroll to contact form">
-        <span>Contact</span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M12 5v14M5 12l7 7 7-7"/>
-        </svg>
-      </a>
-    </section>
-
-    <section class="contact" id="contact">
-      <div class="contact-inner">
-        <div class="contact-header">
-          <h2>Get In Touch</h2>
-          <p>Tell us about your project. We respond within one business day.</p>
-        </div>
-        <form class="contact-form" id="contactForm" novalidate>
-          <div class="form-row">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required autocomplete="name" placeholder="Your name">
-          </div>
-          <div class="form-row">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="(555) 000-0000">
-          </div>
-          <div class="form-row">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required autocomplete="email" placeholder="you@email.com">
-          </div>
-          <div class="form-row">
-            <label for="service">Service Needed</label>
-            <select id="service" name="service" required>
-              <option value="" disabled selected>Select a service</option>
-              <option value="welding">Welding &amp; Fabrication</option>
-              <option value="machining">CNC Machining</option>
-              <option value="repair">Repair &amp; Restoration</option>
-              <option value="custom">Custom Project</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-row form-row-full">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="4" required placeholder="Describe your project, timeline, and materials…"></textarea>
-          </div>
-          <button type="submit" class="btn btn-submit">Send Message</button>
-        </form>
-        <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>
-          <div class="success-icon" aria-hidden="true">✓</div>
-          <h3>Message Sent</h3>
-          <p>Thanks for reaching out. A Black Mesa specialist will contact you shortly.</p>
-        </div>
-      </div>
     </section>
   </main>
-
-  <footer class="site-footer">
-    <p>&copy; <span id="year"></span> Black Mesa Welding &amp; Machining. All rights reserved.</p>
-  </footer>
 
   <script src="script.js"></script>
 </body>

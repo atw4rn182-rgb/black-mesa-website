@@ -3,14 +3,9 @@
 
   const btnQuote = document.getElementById("btnQuote");
   const btnWork = document.getElementById("btnWork");
+  const navQuote = document.getElementById("navQuote");
+  const navWork = document.getElementById("navWork");
   const heroVideo = document.getElementById("heroVideo");
-  const contactForm = document.getElementById("contactForm");
-  const formSuccess = document.getElementById("formSuccess");
-  const yearEl = document.getElementById("year");
-
-  if (yearEl) {
-    yearEl.textContent = String(new Date().getFullYear());
-  }
 
   function initVideo() {
     if (!heroVideo) return;
@@ -27,7 +22,15 @@
     );
   }
 
-  const workUrl = btnWork?.getAttribute("href") || "work.html";
+  function navigateWithFade(link) {
+    if (!link) return;
+    const url = link.getAttribute("href");
+    if (!url) return;
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.bmNavigateWithFade?.(url) ?? (window.location.href = url);
+    });
+  }
 
   btnWork?.addEventListener(
     "mouseenter",
@@ -45,35 +48,10 @@
     { once: true }
   );
 
-  btnWork?.addEventListener("click", (e) => {
-    if (btnWork.tagName === "A") {
-      e.preventDefault();
-      window.bmNavigateWithFade?.(workUrl) ??
-        (window.location.href = workUrl);
-    }
-  });
-
-  btnQuote?.addEventListener("click", (e) => {
-    if (btnQuote.tagName === "A") {
-      e.preventDefault();
-      const quoteUrl = btnQuote.getAttribute("href") || "quote.html";
-      window.bmNavigateWithFade?.(quoteUrl) ??
-        (window.location.href = quoteUrl);
-    }
-  });
-
-  contactForm?.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    if (!contactForm.checkValidity()) {
-      contactForm.reportValidity();
-      return;
-    }
-
-    contactForm.hidden = true;
-    formSuccess.hidden = false;
-    contactForm.reset();
-  });
+  navigateWithFade(btnWork);
+  navigateWithFade(btnQuote);
+  navigateWithFade(navWork);
+  navigateWithFade(navQuote);
 
   initVideo();
 })();

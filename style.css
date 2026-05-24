@@ -124,64 +124,53 @@ body {
   overflow: hidden;
 }
 
-/* Buttons on video — bottom left & bottom right, above the fold */
-.hero-cta-layer {
+/* Homepage — stacked metallic CTAs over video */
+.home-page .hero-cta-layer {
   position: absolute;
   inset: 0;
   z-index: 2;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0 5% clamp(3rem, 8vh, 5rem);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3.5vh, 1.75rem);
+  padding: calc(var(--header-h) + 1rem) 6% 8%;
   pointer-events: none;
 }
 
-.hero-cta {
-  display: inline-block;
+.home-page .hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   pointer-events: auto;
   font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(0.75rem, 2.2vw, 1.1rem);
-  letter-spacing: 0.14em;
+  font-size: clamp(1.35rem, 4.5vw, 2.35rem);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(235, 228, 218, 0.92);
-  padding: 0.5rem 0.85rem;
   white-space: nowrap;
-  background: rgba(22, 18, 14, 0.48);
-  border: 1px solid rgba(140, 120, 95, 0.28);
-  border-radius: 1px;
+  min-width: min(92vw, 22rem);
+  min-height: clamp(3.75rem, 11vh, 5.25rem);
+  padding: clamp(0.9rem, 2.5vh, 1.35rem) clamp(2rem, 8vw, 3.5rem);
+  border-radius: 4px;
   cursor: pointer;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
   transition:
     transform 0.3s var(--ease-cinematic),
-    background 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease;
+    box-shadow 0.3s ease,
+    background 0.25s ease;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
-.hero-cta--quote {
-  background: rgba(30, 22, 16, 0.5);
-  border-color: rgba(160, 100, 55, 0.22);
-}
-
-.hero-cta:hover {
-  color: #fff;
-  background: rgba(32, 26, 20, 0.62);
-  border-color: rgba(170, 145, 115, 0.42);
-  transform: translateY(-2px);
-}
-
-.hero-cta--quote:hover {
-  border-color: rgba(180, 110, 60, 0.35);
-}
-
-.hero-cta:active {
+.home-page .hero-cta:active {
   transform: scale(0.98);
+}
+
+.home-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+  margin-left: auto;
 }
 
 /* ── Buttons (form & shared) ────────────────────────────────── */
@@ -208,6 +197,42 @@ body {
 
 .btn:active {
   transform: scale(0.97);
+}
+
+/* Silver / metallic button — quote page + homepage CTAs */
+.btn-metallic,
+.quote-page .btn-submit {
+  color: #1c1c1e;
+  background: linear-gradient(
+    160deg,
+    #f4f4f6 0%,
+    #d0d0d6 22%,
+    #ececef 45%,
+    #a8a8b2 70%,
+    #d8d8de 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-metallic:hover,
+.quote-page .btn-submit:hover {
+  background: linear-gradient(
+    160deg,
+    #fff 0%,
+    #e0e0e6 25%,
+    #f8f8fa 50%,
+    #b8b8c2 75%,
+    #e8e8ec 100%
+  );
+  box-shadow:
+    0 6px 28px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  transform: translateY(-2px);
 }
 
 .scroll-hint {
@@ -428,20 +453,16 @@ body {
     --header-h: 4rem;
   }
 
-  .hero-cta {
-    font-size: 0.8rem;
-    padding: 0.5rem 0.75rem;
-    letter-spacing: 0.1em;
+  .home-page .hero-cta {
+    font-size: 1.2rem;
+    min-width: min(94vw, 20rem);
+    min-height: 3.5rem;
+    padding: 0.85rem 1.75rem;
   }
 
-  .hero-cta-layer {
-    padding: 0 4% 2.75rem;
-  }
-
-  .hero-cta {
-    font-size: 0.72rem;
-    padding: 0.45rem 0.65rem;
-    letter-spacing: 0.1em;
+  .home-page .hero-cta-layer {
+    gap: 0.85rem;
+    padding: calc(var(--header-h) + 0.5rem) 4% 6%;
   }
 
   .contact-inner {
@@ -510,6 +531,7 @@ body.page-exit .hero-video,
 
 body.page-exit .hero-cta-layer,
 body.page-exit .hero-cta,
+.home-page.page-exit .navbar,
 .work-page.page-exit .work-tabs,
 .work-page.page-exit .work-content-panel,
 .work-page.page-exit .navbar,
@@ -529,6 +551,7 @@ body.page-enter .hero-video,
 
 body.page-enter .hero-cta-layer,
 body.page-enter .hero-cta,
+.home-page.page-enter .navbar,
 .work-page.page-enter .work-content-panel,
 .work-page.page-enter .navbar,
 .quote-page.page-enter .navbar,
@@ -682,36 +705,6 @@ body.page-enter .hero-cta,
 .quote-page .btn-submit {
   width: 100%;
   margin-top: 0.25rem;
-  color: #1c1c1e;
-  background: linear-gradient(
-    160deg,
-    #f4f4f6 0%,
-    #d0d0d6 22%,
-    #ececef 45%,
-    #a8a8b2 70%,
-    #d8d8de 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-}
-
-.quote-page .btn-submit:hover {
-  background: linear-gradient(
-    160deg,
-    #fff 0%,
-    #e0e0e6 25%,
-    #f8f8fa 50%,
-    #b8b8c2 75%,
-    #e8e8ec 100%
-  );
-  box-shadow:
-    0 6px 28px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.75);
-  transform: translateY(-2px);
 }
 
 .quote-form-success {
