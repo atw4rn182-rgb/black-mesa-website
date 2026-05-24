@@ -25,6 +25,10 @@
   --page-fade-in-delay: 0.06s;
   --video-transition: 1.4s var(--ease-cinematic);
   --header-h: 4.5rem;
+  /* Portrait background videos (9:16) — scale up on wide screens to shrink side bars */
+  --bg-video-ar-w: 9;
+  --bg-video-ar-h: 16;
+  --bg-video-wide-scale: 1;
 }
 
 html {
@@ -40,23 +44,24 @@ body {
   min-height: 100dvh;
 }
 
-/* ── Hero video — full scene, no crop, logo from video only ─ */
+/* ── Hero video — portrait frame, wider on desktop (shared with work page) ─ */
 .hero-media {
   position: absolute;
   inset: 0;
   z-index: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  overflow: hidden;
   background: #080808;
 }
 
 /* 9:16 frame — buttons live inside, on the video */
 .hero-video-frame {
   position: relative;
+  aspect-ratio: var(--bg-video-ar-w) / var(--bg-video-ar-h);
   height: 100%;
   max-height: 100%;
-  aspect-ratio: 9 / 16;
   max-width: 100%;
   width: auto;
 }
@@ -68,6 +73,43 @@ body {
   object-fit: contain;
   object-position: center top;
   pointer-events: none;
+}
+
+/* Wide landscape — scale video wider; vertical overflow clips, aspect ratio kept */
+@media (min-width: 768px) and (min-aspect-ratio: 4/3) {
+  :root {
+    --bg-video-wide-scale: 1.38;
+  }
+
+  .hero-video-frame {
+    height: auto;
+    width: min(
+      100vw,
+      calc(
+        100dvh * var(--bg-video-ar-w) / var(--bg-video-ar-h) *
+          var(--bg-video-wide-scale)
+      )
+    );
+    max-height: 100dvh;
+  }
+}
+
+@media (min-width: 1200px) and (min-aspect-ratio: 4/3) {
+  :root {
+    --bg-video-wide-scale: 1.55;
+  }
+}
+
+@media (min-width: 1600px) and (min-aspect-ratio: 4/3) {
+  :root {
+    --bg-video-wide-scale: 1.72;
+  }
+}
+
+@media (min-width: 1920px) and (min-aspect-ratio: 16/9) {
+  :root {
+    --bg-video-wide-scale: 1.88;
+  }
 }
 
 /* ── Hero — full viewport ─────────────────────────────────── */
@@ -712,18 +754,33 @@ body.page-enter .hero-cta,
   pointer-events: none;
 }
 
-/* Full frame, static — fully visible behind scroll area */
+/* Portrait bg — same sizing as homepage hero on wide screens */
 .work-bg-video {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 100%;
+  aspect-ratio: var(--bg-video-ar-w) / var(--bg-video-ar-h);
   height: 100%;
   max-height: 100dvh;
+  width: auto;
+  max-width: 100%;
   object-fit: contain;
   object-position: center top;
+}
+
+@media (min-width: 768px) and (min-aspect-ratio: 4/3) {
+  .work-bg-video {
+    height: auto;
+    width: min(
+      100vw,
+      calc(
+        100dvh * var(--bg-video-ar-w) / var(--bg-video-ar-h) *
+          var(--bg-video-wide-scale)
+      )
+    );
+    max-height: 100dvh;
+  }
 }
 
 /* Tab buttons — hidden until background loads (see inline style in work.html) */
