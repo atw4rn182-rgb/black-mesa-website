@@ -501,7 +501,9 @@ body {
 /* ── Page transitions (crossfade between background videos) ─── */
 html.bm-pre-enter .hero-video,
 html.bm-pre-enter .work-bg-video,
-html.bm-pre-enter .work-bg-poster {
+html.bm-pre-enter .work-bg-poster,
+html.bm-pre-enter .quote-bg-video,
+html.bm-pre-enter .quote-bg-poster {
   opacity: 0;
 }
 
@@ -556,6 +558,9 @@ body.page-exit .hero-cta,
 .work-page.page-exit .work-tabs,
 .work-page.page-exit .work-content-panel,
 .work-page.page-exit .navbar,
+.quote-page.page-exit .quote-bg,
+.quote-page.page-exit .quote-bg-video,
+.quote-page.page-exit .quote-bg-poster,
 .quote-page.page-exit .navbar,
 .quote-page.page-exit .quote-form-column {
   opacity: 0;
@@ -565,7 +570,9 @@ body.page-exit .hero-cta,
 /* Enter — fade in destination background video */
 body.page-enter .hero-video,
 .work-page.page-enter .work-bg-video,
-.work-page.page-enter .work-bg-poster {
+.work-page.page-enter .work-bg-poster,
+.quote-page.page-enter .quote-bg-video,
+.quote-page.page-enter .quote-bg-poster {
   opacity: 0;
   animation: videoFadeIn var(--page-fade-in-duration) var(--ease-cinematic)
     var(--page-fade-in-delay) forwards;
@@ -611,9 +618,13 @@ body.page-enter .hero-cta,
   body.page-exit .hero-video,
   .work-page.page-exit .work-bg-video,
   .work-page.page-exit .work-bg-poster,
+  .quote-page.page-exit .quote-bg-video,
+  .quote-page.page-exit .quote-bg-poster,
   body.page-enter .hero-video,
   .work-page.page-enter .work-bg-video,
-  .work-page.page-enter .work-bg-poster {
+  .work-page.page-enter .work-bg-poster,
+  .quote-page.page-enter .quote-bg-video,
+  .quote-page.page-enter .quote-bg-poster {
     transition: none;
     animation: none;
     opacity: 1;
@@ -650,13 +661,79 @@ body.page-enter .hero-cta,
   backdrop-filter: none;
 }
 
-/* ── Get a Quote page — matches homepage hero layout ──────── */
+/* ── Get a Quote page — widescreen campfire bg ─────────────── */
 .quote-page {
   background: #080808;
 }
 
 .quote-hero {
   position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.quote-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #080808;
+  pointer-events: none;
+}
+
+/* Phones — static poster only (video not loaded) */
+.quote-bg-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.quote-bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(6, 6, 8, 0.55) 0%,
+      rgba(6, 6, 8, 0.2) 40%,
+      rgba(6, 6, 8, 0.28) 70%,
+      rgba(6, 6, 8, 0.62) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.12) 42%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+}
+
+.quote-bg-video {
+  display: none;
+}
+
+/* Tablet+ — cinematic widescreen video cover */
+@media (min-width: 480px) {
+  .quote-bg-poster {
+    display: none;
+  }
+
+  .quote-bg-video {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
 }
 
 /* Transparent form column — left side, video fully visible */
@@ -753,6 +830,23 @@ body.page-enter .hero-cta,
     justify-content: flex-start;
     padding-top: 1rem;
     padding-bottom: 2rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .quote-bg-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(6, 6, 8, 0.58) 0%,
+        rgba(6, 6, 8, 0.25) 45%,
+        rgba(6, 6, 8, 0.65) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.55) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      );
   }
 }
 

@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="prefetch" href="assets/campfire.mp4">
+  <link rel="prefetch" href="assets/campfire-wide.mp4" as="video" media="(min-width: 480px)">
+  <link rel="preload" href="assets/campfire-poster.jpg" as="image" media="(max-width: 479px)">
   <script src="transition.js"></script>
 </head>
 <body class="quote-page">
@@ -19,20 +20,27 @@
 
   <main>
     <section class="hero quote-hero" id="quote">
-      <div class="hero-media">
-        <div class="hero-video-frame">
-          <video
-            class="hero-video"
-            id="quoteVideo"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-          >
-            <source src="assets/campfire.mp4" type="video/mp4">
-          </video>
-        </div>
+      <div class="quote-bg" aria-hidden="true">
+        <img
+          class="quote-bg-poster"
+          src="assets/campfire-poster.jpg"
+          alt=""
+          decoding="async"
+          fetchpriority="high"
+        >
+        <div class="quote-bg-overlay"></div>
+        <video
+          class="quote-bg-video"
+          id="quoteVideo"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster="assets/campfire-poster.jpg"
+        >
+          <source src="assets/campfire-wide.mp4" type="video/mp4">
+        </video>
       </div>
 
       <div class="quote-form-column">
@@ -69,7 +77,7 @@
             <label for="quote-description">Project Description</label>
             <textarea id="quote-description" name="description" rows="5" required placeholder="Describe your project, timeline, materials…"></textarea>
           </div>
-          <button type="submit" class="btn btn-submit">Submit Quote Request</button>
+          <button type="submit" class="btn btn-submit btn-metallic">Submit Quote Request</button>
         </form>
 
         <div class="form-success quote-form-success" id="quoteFormSuccess" role="status" aria-live="polite" hidden>
