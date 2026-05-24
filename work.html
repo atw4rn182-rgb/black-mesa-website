@@ -12,6 +12,16 @@
   <link rel="preload" href="assets/bull-skull.mp4" as="video" media="(max-width: 768px)">
   <link rel="prefetch" href="assets/bull-skull-wide.mp4" as="video" media="(min-width: 769px)">
   <script src="transition.js"></script>
+  <style>
+    .work-tabs {
+      position: fixed;
+      top: 22vh;
+      left: 50%;
+      transform: translateX(-50%) translateY(14px) scale(0.96);
+      z-index: 5;
+      opacity: 0;
+    }
+  </style>
 </head>
 <body class="work-page">
   <div class="work-bg" aria-hidden="true">
@@ -40,31 +50,20 @@
     </video>
   </div>
 
-  <header class="navbar site-header">
-    <a href="index.html" class="site-logo" aria-label="Black Mesa Welding &amp; Machining — Home">
-      <img src="assets/black-mesa-logo.jpg" alt="Black Mesa Welding &amp; Machining">
-    </a>
+  <header class="navbar">
     <a href="index.html" class="nav-link" id="navHome">Home</a>
   </header>
 
-  <nav class="work-tabs work-nav-ctas" aria-label="Primary actions">
-    <button type="button" class="hero-cta btn-metallic work-nav-cta is-active" id="btnViewWork">
-      View Our Work
+  <div class="work-tabs" role="tablist" aria-label="Work gallery type">
+    <button type="button" class="work-tab" id="tabPhotos" role="tab" aria-selected="false" aria-controls="panelPhotos">
+      Photos
     </button>
-    <a href="quote.html" class="hero-cta btn-metallic work-nav-cta" id="btnQuote">
-      Get a Quote
-    </a>
-  </nav>
+    <button type="button" class="work-tab" id="tabVideos" role="tab" aria-selected="false" aria-controls="panelVideos">
+      Videos
+    </button>
+  </div>
 
   <div class="work-content-panel" id="workContentPanel" hidden>
-    <div class="work-gallery-tabs" role="tablist" aria-label="Work gallery type" id="workGalleryTabs" hidden>
-      <button type="button" class="work-gallery-tab" id="tabPhotos" role="tab" aria-selected="false" aria-controls="panelPhotos">
-        Photos
-      </button>
-      <button type="button" class="work-gallery-tab" id="tabVideos" role="tab" aria-selected="false" aria-controls="panelVideos">
-        Videos
-      </button>
-    </div>
     <div class="work-photos-panel" id="workPhotosPanel" role="tabpanel" aria-labelledby="tabPhotos" hidden>
       <div class="work-media-grid" id="panelPhotos"></div>
     </div>
