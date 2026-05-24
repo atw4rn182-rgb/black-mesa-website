@@ -5,6 +5,9 @@
   const portraitVideo = document.getElementById("heroVideoPortrait");
   const landscapeVideo = document.getElementById("heroVideoLandscape");
   const bgVideos = { portrait: portraitVideo, landscape: landscapeVideo };
+  const btnViewWork = document.getElementById("btnViewWork");
+  const btnQuote = document.getElementById("btnQuote");
+  const workGalleryTabs = document.getElementById("workGalleryTabs");
   const tabPhotos = document.getElementById("tabPhotos");
   const tabVideos = document.getElementById("tabVideos");
   const panelPhotos = document.getElementById("panelPhotos");
@@ -256,9 +259,24 @@
     scheduleContentReflow();
   }
 
+  function openWorkGallery() {
+    btnViewWork?.classList.add("is-active");
+    if (workGalleryTabs) workGalleryTabs.hidden = false;
+    if (workContentPanel) {
+      workContentPanel.hidden = false;
+      workContentPanel.classList.add("is-visible");
+    }
+    if (!tabPhotos?.classList.contains("is-active") && !tabVideos?.classList.contains("is-active")) {
+      setActiveTab("photos");
+    }
+  }
+
   function setActiveTab(tab) {
     const isPhotos = tab === "photos";
     const isVideos = tab === "videos";
+
+    btnViewWork?.classList.add("is-active");
+    if (workGalleryTabs) workGalleryTabs.hidden = false;
 
     tabPhotos?.classList.toggle("is-active", isPhotos);
     tabVideos?.classList.toggle("is-active", isVideos);
@@ -295,6 +313,14 @@
   tabPhotos?.addEventListener("click", () => setActiveTab("photos"));
   tabVideos?.addEventListener("click", () => setActiveTab("videos"));
 
+  btnViewWork?.addEventListener("click", () => openWorkGallery());
+
+  btnQuote?.addEventListener("click", (e) => {
+    e.preventDefault();
+    const quoteUrl = btnQuote.getAttribute("href") || "quote.html";
+    window.bmNavigateWithFade?.(quoteUrl) ?? (window.location.href = quoteUrl);
+  });
+
   navHome?.addEventListener("click", (e) => {
     e.preventDefault();
     const homeUrl = navHome.getAttribute("href") || "index.html";
@@ -307,20 +333,20 @@
     el.style.setProperty("--stagger", String(index));
   });
 
-  function maybeOpenTabFromUrl() {
-    const tab = new URLSearchParams(window.location.search).get("tab");
-    if (tab !== "photos" && tab !== "videos") return;
-
-    const tryOpen = () => {
-      if (!tabsRevealed) {
-        window.setTimeout(tryOpen, 80);
-        return;
-      }
-      setActiveTab(tab);
-    };
-    tryOpen();
-  }
-
   initPageVideos();
-  maybeOpenTabFromUrl();
+
+  const openGalleryAfterReveal = () => {
+    if (!tabsRevealed) {
+      window.setTimeout(openGalleryAfterReveal, 80);
+      return;
+    }
+    const tab = new URLSearchParams(window.location.search).get("tab");
+    if (tab === "photos" || tab === "videos") {
+      setActiveTab(tab);
+      return;
+    }
+    openWorkGallery();
+  };
+
+  openGalleryAfterReveal();
 })();

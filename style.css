@@ -244,6 +244,8 @@ body {
   );
   border: 1px solid rgba(255, 255, 255, 0.45);
   box-shadow:
+    0 0 22px rgba(255, 255, 255, 0.14),
+    0 0 44px rgba(255, 220, 180, 0.1),
     0 4px 20px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.65),
     inset 0 -1px 0 rgba(0, 0, 0, 0.12);
@@ -261,9 +263,17 @@ body {
     #e8e8ec 100%
   );
   box-shadow:
-    0 6px 28px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.75);
-  transform: translateY(-2px);
+    0 0 30px rgba(255, 255, 255, 0.22),
+    0 0 56px rgba(255, 220, 180, 0.16),
+    0 8px 32px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: translateY(-3px);
+  filter: brightness(1.06);
+}
+
+.hero-cta.btn-metallic:active {
+  transform: translateY(-1px) scale(0.98);
+  filter: brightness(1.02);
 }
 
 .scroll-hint {
@@ -564,7 +574,7 @@ body.page-exit .page-bg-video {
 
 body.page-exit .hero-cta-layer,
 body.page-exit .hero-cta,
-.work-page.page-exit .work-tabs,
+.work-page.page-exit .work-nav-ctas,
 .work-page.page-exit .work-content-panel,
 .work-page.page-exit .navbar,
 .quote-page.page-exit .navbar,
@@ -582,6 +592,8 @@ body.page-enter .page-bg-video {
 
 body.page-enter .hero-cta-layer,
 body.page-enter .hero-cta,
+.work-page.page-enter .work-nav-ctas,
+.work-page.page-enter .work-nav-ctas .hero-cta,
 .work-page.page-enter .work-content-panel,
 .work-page.page-enter .navbar,
 .quote-page.page-enter .navbar,
@@ -773,21 +785,90 @@ body.page-enter .hero-cta,
   overflow: hidden;
 }
 
-/* Tab buttons — hidden until background loads (see inline style in work.html) */
-.work-tabs {
+/* Work page — upper-middle nav CTAs (match homepage hero buttons) */
+.work-tabs.work-nav-ctas {
   position: fixed;
   top: 22vh;
   left: 50%;
   transform: translateX(-50%) translateY(14px) scale(0.96);
   z-index: 5;
   display: flex;
-  gap: 2rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: clamp(1.15rem, 4.5vw, 2.75rem);
   justify-content: center;
   align-items: center;
   width: max-content;
+  max-width: min(96vw, 52rem);
   margin: 0;
-  padding: 0;
+  padding: 0 clamp(0.5rem, 2vw, 1rem);
   opacity: 0;
+  pointer-events: none;
+}
+
+.work-nav-ctas.is-ui-visible {
+  pointer-events: auto;
+}
+
+.work-nav-ctas .work-nav-cta {
+  flex: 0 1 auto;
+  margin: 0;
+  border: none;
+  min-width: clamp(9.5rem, 28vw, 14rem);
+  max-width: min(44vw, 24rem);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.work-nav-ctas .work-nav-cta.is-active {
+  outline: 2px solid rgba(255, 255, 255, 0.42);
+  outline-offset: 3px;
+  box-shadow:
+    0 0 28px rgba(255, 255, 255, 0.2),
+    0 0 52px rgba(255, 220, 180, 0.14),
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* Photos / Videos — secondary tabs inside content panel */
+.work-gallery-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.work-gallery-tab {
+  flex: 0 0 auto;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(246, 246, 248, 0.88);
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 2px;
+  background: rgba(12, 12, 16, 0.55);
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+  touch-action: manipulation;
+}
+
+.work-gallery-tab:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.38);
+  background: rgba(24, 24, 30, 0.72);
+}
+
+.work-gallery-tab.is-active {
+  color: #fff;
+  border-color: rgba(232, 93, 4, 0.55);
+  background: rgba(232, 93, 4, 0.18);
 }
 
 .work-tabs.is-ui-visible {
@@ -879,58 +960,6 @@ body.page-enter .hero-cta,
   }
 }
 
-.work-tab {
-  flex: 0 0 auto;
-  font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(1rem, 2.2vw, 1.2rem);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #1c1c1e;
-  padding: 0.55rem 1rem;
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 2px;
-  background: linear-gradient(
-    160deg,
-    #f4f4f6 0%,
-    #d0d0d6 22%,
-    #ececef 45%,
-    #a8a8b2 70%,
-    #d8d8de 100%
-  );
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    filter 0.25s ease;
-  touch-action: manipulation;
-}
-
-.work-tab:hover {
-  background: linear-gradient(
-    160deg,
-    #fff 0%,
-    #e0e0e6 25%,
-    #f8f8fa 50%,
-    #b8b8c2 75%,
-    #e8e8ec 100%
-  );
-  filter: brightness(1.05);
-  box-shadow:
-    0 6px 22px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.75);
-}
-
-.work-tab.is-active {
-  filter: brightness(1.06);
-  outline: 2px solid rgba(255, 255, 255, 0.35);
-  outline-offset: 2px;
-}
-
 .work-tab-panel[hidden] {
   display: none !important;
 }
@@ -1003,9 +1032,11 @@ body.page-enter .hero-cta,
 }
 
 @media (max-width: 480px) {
-  .work-tabs {
+  .work-tabs.work-nav-ctas {
     top: 18vh;
-    gap: 1.5rem;
+    gap: clamp(0.85rem, 3vw, 1.25rem);
+    flex-wrap: wrap;
+    width: min(96vw, 22rem);
   }
 
   .work-content-panel {
