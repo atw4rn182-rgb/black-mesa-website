@@ -3,8 +3,6 @@
 
   const btnQuote = document.getElementById("btnQuote");
   const btnWork = document.getElementById("btnWork");
-  const navQuote = document.getElementById("navQuote");
-  const navWork = document.getElementById("navWork");
   const portraitVideo = document.getElementById("heroVideoPortrait");
   const landscapeVideo = document.getElementById("heroVideoLandscape");
 
@@ -38,8 +36,6 @@
 
   navigateWithFade(btnWork);
   navigateWithFade(btnQuote);
-  navigateWithFade(navWork);
-  navigateWithFade(navQuote);
 
   window.bmBgVideo?.syncBackgroundVideos(bgVideos);
 

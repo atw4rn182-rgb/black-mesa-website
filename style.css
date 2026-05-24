@@ -135,8 +135,8 @@ body {
   overflow: hidden;
 }
 
-/* Homepage — metallic CTAs anchored bottom left & bottom right */
-.home-page .hero-cta-layer {
+/* Hero CTAs — bottom left & bottom right (sitewide) */
+.hero-cta-layer {
   position: absolute;
   inset: 0;
   z-index: 3;
@@ -145,15 +145,15 @@ body {
   flex-wrap: nowrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: clamp(1rem, 4vw, 2.5rem);
+  gap: clamp(1.15rem, 4.5vw, 2.75rem);
   padding:
-    calc(var(--header-h) + 0.75rem)
-    clamp(1.25rem, 5vw, 2.75rem)
-    clamp(2.5rem, 7vh, 4.5rem);
+    clamp(1rem, 3vh, 1.5rem)
+    clamp(1.35rem, 5.5vw, 3rem)
+    clamp(2.75rem, 7.5vh, 4.75rem);
   pointer-events: none;
 }
 
-.home-page .hero-cta {
+.hero-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -161,13 +161,13 @@ body {
   text-decoration: none;
   pointer-events: auto;
   font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(1.35rem, 4.5vw, 2.35rem);
+  font-size: clamp(1.5rem, 5.1vw, 2.65rem);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
-  max-width: min(42vw, 22rem);
-  min-height: clamp(3.75rem, 11vh, 5.25rem);
-  padding: clamp(0.9rem, 2.5vh, 1.35rem) clamp(1.5rem, 5vw, 3.5rem);
+  max-width: min(44vw, 24rem);
+  min-height: clamp(4.15rem, 12.5vh, 5.9rem);
+  padding: clamp(1rem, 2.8vh, 1.5rem) clamp(1.65rem, 5.6vw, 3.9rem);
   border-radius: 4px;
   cursor: pointer;
   transition:
@@ -178,25 +178,18 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.home-page .hero-cta--work {
+.hero-cta--work {
   align-self: flex-end;
   margin-right: auto;
 }
 
-.home-page .hero-cta--quote {
+.hero-cta--quote {
   align-self: flex-end;
   margin-left: auto;
 }
 
-.home-page .hero-cta:active {
+.hero-cta:active {
   transform: scale(0.98);
-}
-
-.home-nav {
-  display: flex;
-  align-items: center;
-  gap: clamp(1.25rem, 4vw, 2.5rem);
-  margin-left: auto;
 }
 
 /* ── Buttons (form & shared) ────────────────────────────────── */
@@ -479,20 +472,20 @@ body {
     --header-h: 4rem;
   }
 
-  .home-page .hero-cta {
-    font-size: clamp(0.95rem, 3.8vw, 1.2rem);
-    min-height: 3.25rem;
-    max-width: calc(50% - 0.5rem);
-    padding: 0.75rem clamp(0.85rem, 3vw, 1.25rem);
+  .hero-cta {
+    font-size: clamp(1.05rem, 4.2vw, 1.35rem);
+    min-height: 3.85rem;
+    max-width: calc(50% - 0.55rem);
+    padding: 0.95rem clamp(1rem, 3.5vw, 1.4rem);
     letter-spacing: 0.1em;
   }
 
-  .home-page .hero-cta-layer {
-    gap: clamp(0.75rem, 3vw, 1.25rem);
+  .hero-cta-layer {
+    gap: clamp(0.85rem, 3.5vw, 1.35rem);
     padding:
-      calc(var(--header-h) + 0.35rem)
-      clamp(0.85rem, 4vw, 1.25rem)
-      clamp(1.75rem, 5vh, 2.75rem);
+      clamp(0.75rem, 2vh, 1rem)
+      clamp(0.9rem, 4.5vw, 1.35rem)
+      clamp(1.85rem, 5.5vh, 2.85rem);
   }
 
   .contact-inner {
@@ -559,7 +552,6 @@ body.page-exit .page-bg-video {
 
 body.page-exit .hero-cta-layer,
 body.page-exit .hero-cta,
-.home-page.page-exit .navbar,
 .work-page.page-exit .work-tabs,
 .work-page.page-exit .work-content-panel,
 .work-page.page-exit .navbar,
@@ -578,7 +570,6 @@ body.page-enter .page-bg-video {
 
 body.page-enter .hero-cta-layer,
 body.page-enter .hero-cta,
-.home-page.page-enter .navbar,
 .work-page.page-enter .work-content-panel,
 .work-page.page-enter .navbar,
 .quote-page.page-enter .navbar,
