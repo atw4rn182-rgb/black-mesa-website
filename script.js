@@ -35,7 +35,7 @@
   btnWork?.addEventListener(
     "mouseenter",
     () => {
-      const prefetchHref = "assets/bull-skull.mp4";
+      const prefetchHref = "assets/bull-skull-wide.mp4";
       if (document.querySelector(`link[rel="prefetch"][href="${prefetchHref}"]`)) {
         return;
       }

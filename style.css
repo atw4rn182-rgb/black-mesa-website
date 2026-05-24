@@ -500,7 +500,8 @@ body {
 
 /* ── Page transitions (crossfade between background videos) ─── */
 html.bm-pre-enter .hero-video,
-html.bm-pre-enter .work-bg-video {
+html.bm-pre-enter .work-bg-video,
+html.bm-pre-enter .work-bg-poster {
   opacity: 0;
 }
 
@@ -543,7 +544,8 @@ body.page-exit .hero-media,
 body.page-exit .hero-video-frame,
 body.page-exit .hero-video,
 .work-page.page-exit .work-bg,
-.work-page.page-exit .work-bg-video {
+.work-page.page-exit .work-bg-video,
+.work-page.page-exit .work-bg-poster {
   opacity: 0;
   transition: opacity var(--page-fade-out-duration) var(--ease-fade);
 }
@@ -562,7 +564,8 @@ body.page-exit .hero-cta,
 
 /* Enter — fade in destination background video */
 body.page-enter .hero-video,
-.work-page.page-enter .work-bg-video {
+.work-page.page-enter .work-bg-video,
+.work-page.page-enter .work-bg-poster {
   opacity: 0;
   animation: videoFadeIn var(--page-fade-in-duration) var(--ease-cinematic)
     var(--page-fade-in-delay) forwards;
@@ -607,8 +610,10 @@ body.page-enter .hero-cta,
   body.page-exit .hero-media,
   body.page-exit .hero-video,
   .work-page.page-exit .work-bg-video,
+  .work-page.page-exit .work-bg-poster,
   body.page-enter .hero-video,
-  .work-page.page-enter .work-bg-video {
+  .work-page.page-enter .work-bg-video,
+  .work-page.page-enter .work-bg-poster {
     transition: none;
     animation: none;
     opacity: 1;
@@ -766,32 +771,59 @@ body.page-enter .hero-cta,
   pointer-events: none;
 }
 
-/* Portrait bg — same sizing as homepage hero on wide screens */
-.work-bg-video {
+/* Mobile / tablet — cinematic still from widescreen source */
+.work-bg-poster {
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  aspect-ratio: var(--bg-video-ar-w) / var(--bg-video-ar-h);
+  inset: 0;
+  width: 100%;
   height: 100%;
-  max-height: 100dvh;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  object-position: center top;
+  object-fit: cover;
+  object-position: center center;
 }
 
-@media (min-width: 768px) and (min-aspect-ratio: 4/3) {
-  .work-bg-video {
-    height: auto;
-    width: min(
-      100vw,
-      calc(
-        100dvh * var(--bg-video-ar-w) / var(--bg-video-ar-h) *
-          var(--bg-video-wide-scale)
-      )
+.work-bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(6, 6, 8, 0.52) 0%,
+      rgba(6, 6, 8, 0.18) 38%,
+      rgba(6, 6, 8, 0.22) 62%,
+      rgba(6, 6, 8, 0.58) 100%
+    ),
+    radial-gradient(
+      ellipse 90% 70% at 50% 42%,
+      transparent 0%,
+      rgba(0, 0, 0, 0.32) 100%
     );
-    max-height: 100dvh;
+}
+
+/* Widescreen video hidden until desktop breakpoint */
+.work-bg-video--wide {
+  display: none;
+}
+
+/* Desktop — full-bleed 16:9 cinematic cover */
+@media (min-width: 1024px) {
+  .work-bg-poster {
+    display: none;
+  }
+
+  .work-bg-video--wide {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    left: 0;
+    transform: none;
+    object-fit: cover;
+    object-position: center center;
   }
 }
 

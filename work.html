@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="prefetch" href="assets/bull-skull.mp4">
+  <link rel="prefetch" href="assets/bull-skull-wide.mp4" as="video" media="(min-width: 1024px)">
+  <link rel="preload" href="assets/bull-skull-poster.jpg" as="image" media="(max-width: 1023px)">
   <script src="transition.js"></script>
   <style>
     .work-tabs {
@@ -24,16 +25,25 @@
 </head>
 <body class="work-page">
   <div class="work-bg" aria-hidden="true">
+    <img
+      class="work-bg-poster"
+      src="assets/bull-skull-poster.jpg"
+      alt=""
+      decoding="async"
+      fetchpriority="high"
+    >
+    <div class="work-bg-overlay"></div>
     <video
-      class="work-bg-video"
+      class="work-bg-video work-bg-video--wide"
       id="heroVideo"
       autoplay
       muted
       loop
       playsinline
-      preload="auto"
+      preload="none"
+      poster="assets/bull-skull-poster.jpg"
     >
-      <source src="assets/bull-skull.mp4" type="video/mp4">
+      <source src="assets/bull-skull-wide.mp4" type="video/mp4">
     </video>
   </div>
 
