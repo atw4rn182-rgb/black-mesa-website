@@ -115,6 +115,27 @@ body {
   filter: var(--video-tone);
 }
 
+/* Homepage — keep baked-in logo visible at top of frame */
+.home-page .page-bg-video {
+  object-position: center top;
+}
+
+.home-page .hero-media .page-bg-overlay {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8, 8, 10, 0.06) 0%,
+      var(--overlay-veil-mid) 32%,
+      var(--overlay-veil-low) 62%,
+      var(--overlay-veil-bottom) 100%
+    ),
+    radial-gradient(
+      ellipse 90% 70% at 50% 42%,
+      transparent 0%,
+      var(--overlay-vignette) 100%
+    );
+}
+
 .page-bg-video--portrait {
   display: block;
   z-index: 0;
@@ -159,9 +180,9 @@ body {
   justify-content: space-between;
   gap: clamp(1.15rem, 4.5vw, 2.75rem);
   padding:
-    clamp(1rem, 3vh, 1.5rem)
-    clamp(1.35rem, 5.5vw, 3rem)
-    clamp(2.75rem, 7.5vh, 4.75rem);
+    clamp(0.75rem, 2vh, 1rem)
+    clamp(1.25rem, 5vw, 2.75rem)
+    clamp(2.5rem, 7vh, 4.5rem);
   pointer-events: none;
 }
 
@@ -173,13 +194,13 @@ body {
   text-decoration: none;
   pointer-events: auto;
   font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(1.5rem, 5.1vw, 2.65rem);
+  font-size: clamp(1.35rem, 4.5vw, 2.35rem);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
-  max-width: min(44vw, 24rem);
-  min-height: clamp(4.15rem, 12.5vh, 5.9rem);
-  padding: clamp(1rem, 2.8vh, 1.5rem) clamp(1.65rem, 5.6vw, 3.9rem);
+  max-width: min(42vw, 22rem);
+  min-height: clamp(3.75rem, 11vh, 5.25rem);
+  padding: clamp(0.9rem, 2.5vh, 1.35rem) clamp(1.5rem, 5vw, 3.5rem);
   border-radius: 4px;
   cursor: pointer;
   transition:
@@ -495,19 +516,19 @@ body {
   }
 
   .hero-cta {
-    font-size: clamp(1.05rem, 4.2vw, 1.35rem);
-    min-height: 3.85rem;
-    max-width: calc(50% - 0.55rem);
-    padding: 0.95rem clamp(1rem, 3.5vw, 1.4rem);
+    font-size: clamp(0.95rem, 3.8vw, 1.2rem);
+    min-height: 3.25rem;
+    max-width: calc(50% - 0.5rem);
+    padding: 0.75rem clamp(0.85rem, 3vw, 1.25rem);
     letter-spacing: 0.1em;
   }
 
   .hero-cta-layer {
-    gap: clamp(0.85rem, 3.5vw, 1.35rem);
+    gap: clamp(0.75rem, 3vw, 1.25rem);
     padding:
-      clamp(0.75rem, 2vh, 1rem)
-      clamp(0.9rem, 4.5vw, 1.35rem)
-      clamp(1.85rem, 5.5vh, 2.85rem);
+      clamp(0.5rem, 1.5vh, 0.75rem)
+      clamp(0.85rem, 4vw, 1.25rem)
+      clamp(1.75rem, 5vh, 2.75rem);
   }
 
   .contact-inner {
@@ -574,7 +595,10 @@ body.page-exit .page-bg-video {
 
 body.page-exit .hero-cta-layer,
 body.page-exit .hero-cta,
+body.page-exit .site-logo,
 .work-page.page-exit .work-nav-ctas,
+.work-page.page-exit .site-logo,
+.quote-page.page-exit .site-logo,
 .work-page.page-exit .work-content-panel,
 .work-page.page-exit .navbar,
 .quote-page.page-exit .navbar,
@@ -592,7 +616,10 @@ body.page-enter .page-bg-video {
 
 body.page-enter .hero-cta-layer,
 body.page-enter .hero-cta,
+body.page-enter .site-logo,
 .work-page.page-enter .work-nav-ctas,
+.work-page.page-enter .site-logo,
+.quote-page.page-enter .site-logo,
 .work-page.page-enter .work-nav-ctas .hero-cta,
 .work-page.page-enter .work-content-panel,
 .work-page.page-enter .navbar,
@@ -646,8 +673,14 @@ body.page-enter .hero-cta,
   text-transform: uppercase;
   color: rgba(248, 244, 238, 0.94);
   text-decoration: none;
-  padding: 0.35rem 0.5rem;
-  transition: color 0.25s ease;
+  padding: 0.35rem 0.65rem;
+  border-radius: 4px;
+  background: rgba(6, 6, 8, 0.38);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+  transition:
+    color 0.25s ease,
+    background 0.25s ease;
 }
 
 .nav-link:hover {
@@ -659,13 +692,57 @@ body.page-enter .hero-cta,
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 200;
   display: flex;
   align-items: center;
-  padding: 1rem 1.5rem;
-  height: var(--header-h);
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 1.25rem;
+  min-height: var(--header-h);
   background-color: transparent;
   backdrop-filter: none;
+  pointer-events: none;
+}
+
+.navbar > * {
+  pointer-events: auto;
+}
+
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(6, 6, 8, 0.42);
+  box-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.55),
+    0 0 28px rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s var(--ease-cinematic);
+}
+
+.site-logo:hover {
+  background: rgba(8, 8, 10, 0.58);
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.62),
+    0 0 36px rgba(0, 0, 0, 0.42);
+  transform: translateY(-1px);
+}
+
+.site-logo img {
+  display: block;
+  width: auto;
+  height: clamp(2.35rem, 7.5vh, 3.35rem);
+  max-width: min(52vw, 13.5rem);
+  object-fit: contain;
+  filter:
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.75))
+    drop-shadow(0 0 12px rgba(0, 0, 0, 0.45));
 }
 
 /* ── Get a Quote page — widescreen campfire bg ─────────────── */
@@ -814,8 +891,8 @@ body.page-enter .hero-cta,
   flex: 0 1 auto;
   margin: 0;
   border: none;
-  min-width: clamp(9.5rem, 28vw, 14rem);
-  max-width: min(44vw, 24rem);
+  min-width: clamp(8rem, 22vw, 11.5rem);
+  max-width: min(42vw, 22rem);
   appearance: none;
   -webkit-appearance: none;
 }
