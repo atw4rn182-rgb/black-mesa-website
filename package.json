@@ -1,5 +1,5 @@
 {
-    "buildCommand": "echo 'No build required'",
-    "outputDirectory": ".",
-    "cleanUrls": true
-  }
+  "buildCommand": "echo 'No build required'",
+  "outputDirectory": ".",
+  "cleanUrls": true
+}
