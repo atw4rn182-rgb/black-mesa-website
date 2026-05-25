@@ -9,7 +9,7 @@
 
   const bgVideos = { portrait: portraitVideo, landscape: landscapeVideo };
 
-  quoteForm?.addEventListener("submit", (e) => {
+  quoteForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     if (!quoteForm.checkValidity()) {
@@ -17,9 +17,27 @@
       return;
     }
 
-    quoteForm.hidden = true;
-    formSuccess.hidden = false;
-    quoteForm.reset();
+    const submitBtn = quoteForm.querySelector('button[type="submit"]');
+    submitBtn?.setAttribute("disabled", "disabled");
+
+    try {
+      const res = await fetch(quoteForm.action, {
+        method: "POST",
+        body: new FormData(quoteForm),
+        headers: { Accept: "application/json" },
+      });
+
+      if (!res.ok) throw new Error("Formspree request failed");
+
+      quoteForm.hidden = true;
+      formSuccess.hidden = false;
+      quoteForm.reset();
+    } catch {
+      submitBtn?.removeAttribute("disabled");
+      window.alert(
+        "Something went wrong sending your request. Please try again."
+      );
+    }
   });
 
   navHome?.addEventListener("click", (e) => {
