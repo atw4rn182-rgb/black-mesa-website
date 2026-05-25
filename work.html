@@ -12,16 +12,6 @@
   <link rel="preload" href="assets/bull-skull.mp4" as="video" media="(max-width: 768px)">
   <link rel="prefetch" href="assets/bull-skull-wide.mp4" as="video" media="(min-width: 769px)">
   <script src="transition.js"></script>
-  <style>
-    .work-tabs {
-      position: fixed;
-      top: 22vh;
-      left: 50%;
-      transform: translateX(-50%) translateY(14px) scale(0.96);
-      z-index: 5;
-      opacity: 0;
-    }
-  </style>
 </head>
 <body class="work-page">
   <div class="work-bg" aria-hidden="true">
@@ -54,13 +44,15 @@
     <a href="index.html" class="nav-link" id="navHome">Home</a>
   </header>
 
-  <div class="work-tabs" role="tablist" aria-label="Work gallery type">
-    <button type="button" class="work-tab hero-cta btn-metallic" id="tabPhotos" role="tab" aria-selected="false" aria-controls="panelPhotos">
-      Photos
-    </button>
-    <button type="button" class="work-tab hero-cta btn-metallic" id="tabVideos" role="tab" aria-selected="false" aria-controls="panelVideos">
-      Videos
-    </button>
+  <div class="work-tabs-anchor">
+    <div class="work-tabs" role="tablist" aria-label="Work gallery type">
+      <button type="button" class="work-tab hero-cta btn-metallic" id="tabPhotos" role="tab" aria-selected="false" aria-controls="panelPhotos">
+        Photos
+      </button>
+      <button type="button" class="work-tab hero-cta btn-metallic" id="tabVideos" role="tab" aria-selected="false" aria-controls="panelVideos">
+        Videos
+      </button>
+    </div>
   </div>
 
   <div class="work-content-panel" id="workContentPanel" hidden>

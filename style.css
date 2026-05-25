@@ -623,8 +623,6 @@ body.page-enter .page-bg-video {
 
 body.page-enter .hero-cta-layer,
 body.page-enter .hero-cta,
-.work-page.page-enter .work-tabs,
-.work-page.page-enter .work-tab,
 .work-page.page-enter .work-content-panel,
 .work-page.page-enter .navbar,
 .quote-page.page-enter .navbar,
@@ -816,13 +814,28 @@ body.page-enter .hero-cta,
   overflow: hidden;
 }
 
-/* Tab buttons — hidden until background loads (see inline style in work.html) */
-.work-tabs {
+/* Tab buttons — flex anchor keeps tabs centered (no transform jump) */
+.work-tabs-anchor {
   position: fixed;
   top: 22vh;
-  left: 50%;
-  transform: translateX(-50%) translateY(14px) scale(0.96);
+  left: 0;
+  right: 0;
   z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  pointer-events: none;
+  transition: top 0.45s var(--ease-cinematic);
+}
+
+/* After Photos/Videos selected — lift tabs so grid content clears */
+.work-page.work-page--photos .work-tabs-anchor,
+.work-page.work-page--videos .work-tabs-anchor {
+  top: 13vh;
+}
+
+.work-tabs {
   display: flex;
   flex-wrap: nowrap;
   gap: clamp(1.15rem, 4.5vw, 2.75rem);
@@ -833,15 +846,8 @@ body.page-enter .hero-cta,
   margin: 0;
   padding: 0;
   opacity: 0;
-  transition:
-    top 0.45s var(--ease-cinematic),
-    transform 0.45s var(--ease-cinematic);
-}
-
-/* After Photos/Videos selected — lift tabs so grid content clears */
-.work-page.work-page--photos .work-tabs,
-.work-page.work-page--videos .work-tabs {
-  top: 13vh;
+  transform: translateY(14px) scale(0.96);
+  pointer-events: auto;
 }
 
 .work-tabs.is-ui-visible {
@@ -851,11 +857,11 @@ body.page-enter .hero-cta,
 @keyframes workTabsReveal {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(14px) scale(0.96);
+    transform: translateY(14px) scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -1014,12 +1020,12 @@ body.page-enter .hero-cta,
 }
 
 @media (max-width: 768px) {
-  .work-tabs {
+  .work-tabs-anchor {
     top: 20vh;
   }
 
-  .work-page.work-page--photos .work-tabs,
-  .work-page.work-page--videos .work-tabs {
+  .work-page.work-page--photos .work-tabs-anchor,
+  .work-page.work-page--videos .work-tabs-anchor {
     top: 12vh;
   }
 
@@ -1036,15 +1042,18 @@ body.page-enter .hero-cta,
 }
 
 @media (max-width: 480px) {
-  .work-tabs {
+  .work-tabs-anchor {
     top: 18vh;
+  }
+
+  .work-tabs {
     gap: clamp(0.75rem, 3vw, 1.25rem);
     flex-wrap: wrap;
     width: min(96vw, 22rem);
   }
 
-  .work-page.work-page--photos .work-tabs,
-  .work-page.work-page--videos .work-tabs {
+  .work-page.work-page--photos .work-tabs-anchor,
+  .work-page.work-page--videos .work-tabs-anchor {
     top: 10vh;
   }
 
@@ -1076,7 +1085,7 @@ body.page-enter .hero-cta,
 @media (prefers-reduced-motion: reduce) {
   .work-tabs {
     opacity: 1;
-    transform: translateX(-50%);
+    transform: none;
     animation: none !important;
   }
 
