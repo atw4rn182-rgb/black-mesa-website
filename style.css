@@ -115,8 +115,8 @@ body {
   filter: var(--video-tone);
 }
 
-/* Homepage — keep baked-in logo visible at top of frame */
-.home-page .page-bg-video {
+/* Homepage — mobile portrait: anchor logo at top */
+.home-page .page-bg-video--portrait {
   object-position: center top;
 }
 
@@ -155,13 +155,12 @@ body {
     display: block;
   }
 
-  /* Homepage — portrait video has the logo; widescreen clip does not */
-  .home-page .page-bg-video--portrait {
-    display: block;
-  }
-
+  /* Homepage desktop — widescreen clip, slightly pulled back for more scene */
   .home-page .page-bg-video--landscape {
-    display: none;
+    object-fit: cover;
+    object-position: center top;
+    transform: scale(0.9);
+    transform-origin: center top;
   }
 }
 
