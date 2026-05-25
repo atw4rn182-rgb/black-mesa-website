@@ -154,6 +154,15 @@ body {
   .page-bg-video--landscape {
     display: block;
   }
+
+  /* Homepage — portrait video has the logo; widescreen clip does not */
+  .home-page .page-bg-video--portrait {
+    display: block;
+  }
+
+  .home-page .page-bg-video--landscape {
+    display: none;
+  }
 }
 
 /* ── Hero — full viewport ─────────────────────────────────── */
@@ -596,6 +605,7 @@ body.page-exit .page-bg-video {
 body.page-exit .hero-cta-layer,
 body.page-exit .hero-cta,
 .work-page.page-exit .work-tabs,
+.work-page.page-exit .work-tab,
 .work-page.page-exit .work-content-panel,
 .work-page.page-exit .navbar,
 .quote-page.page-exit .navbar,
@@ -613,6 +623,8 @@ body.page-enter .page-bg-video {
 
 body.page-enter .hero-cta-layer,
 body.page-enter .hero-cta,
+.work-page.page-enter .work-tabs,
+.work-page.page-enter .work-tab,
 .work-page.page-enter .work-content-panel,
 .work-page.page-enter .navbar,
 .quote-page.page-enter .navbar,
@@ -812,13 +824,24 @@ body.page-enter .hero-cta,
   transform: translateX(-50%) translateY(14px) scale(0.96);
   z-index: 5;
   display: flex;
-  gap: 2rem;
+  flex-wrap: nowrap;
+  gap: clamp(1.15rem, 4.5vw, 2.75rem);
   justify-content: center;
   align-items: center;
   width: max-content;
+  max-width: min(96vw, 52rem);
   margin: 0;
   padding: 0;
   opacity: 0;
+  transition:
+    top 0.45s var(--ease-cinematic),
+    transform 0.45s var(--ease-cinematic);
+}
+
+/* After Photos/Videos selected — lift tabs so grid content clears */
+.work-page.work-page--photos .work-tabs,
+.work-page.work-page--videos .work-tabs {
+  top: 13vh;
 }
 
 .work-tabs.is-ui-visible {
@@ -840,11 +863,11 @@ body.page-enter .hero-cta,
 .work-content-panel {
   position: fixed;
   z-index: 4;
-  top: calc(22vh + 3.5rem);
+  top: calc(22vh + 6.5rem);
   left: 50%;
   transform: translateX(-50%);
   width: min(1040px, 94vw);
-  max-height: calc(72vh - 2rem);
+  max-height: calc(68vh - 2rem);
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
@@ -855,6 +878,13 @@ body.page-enter .hero-cta,
   pointer-events: none;
   scrollbar-width: thin;
   scrollbar-color: rgba(195, 165, 115, 0.75) rgba(0, 0, 0, 0.25);
+  transition: top 0.45s var(--ease-cinematic);
+}
+
+.work-page.work-page--photos .work-content-panel.is-visible,
+.work-page.work-page--videos .work-content-panel.is-visible {
+  top: calc(13vh + 6.5rem);
+  max-height: calc(76vh - 2rem);
 }
 
 .work-content-panel.is-visible {
@@ -910,56 +940,17 @@ body.page-enter .hero-cta,
   }
 }
 
-.work-tab {
-  flex: 0 0 auto;
-  font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(1rem, 2.2vw, 1.2rem);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #1c1c1e;
-  padding: 0.55rem 1rem;
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 2px;
-  background: linear-gradient(
-    160deg,
-    #f4f4f6 0%,
-    #d0d0d6 22%,
-    #ececef 45%,
-    #a8a8b2 70%,
-    #d8d8de 100%
-  );
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    filter 0.25s ease;
-  touch-action: manipulation;
+.work-tab.hero-cta {
+  flex: 0 1 auto;
+  margin: 0;
+  min-width: clamp(8.5rem, 24vw, 12rem);
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-.work-tab:hover {
-  background: linear-gradient(
-    160deg,
-    #fff 0%,
-    #e0e0e6 25%,
-    #f8f8fa 50%,
-    #b8b8c2 75%,
-    #e8e8ec 100%
-  );
-  filter: brightness(1.05);
-  box-shadow:
-    0 6px 22px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.75);
-}
-
-.work-tab.is-active {
-  filter: brightness(1.06);
-  outline: 2px solid rgba(255, 255, 255, 0.35);
-  outline-offset: 2px;
+.work-tab.hero-cta.is-active {
+  outline: 2px solid rgba(255, 255, 255, 0.42);
+  outline-offset: 3px;
 }
 
 .work-tab-panel[hidden] {
@@ -1027,8 +1018,19 @@ body.page-enter .hero-cta,
     top: 20vh;
   }
 
+  .work-page.work-page--photos .work-tabs,
+  .work-page.work-page--videos .work-tabs {
+    top: 12vh;
+  }
+
   .work-content-panel {
-    top: calc(20vh + 3.25rem);
+    top: calc(20vh + 6rem);
+    max-height: calc(70vh - 1.5rem);
+  }
+
+  .work-page.work-page--photos .work-content-panel.is-visible,
+  .work-page.work-page--videos .work-content-panel.is-visible {
+    top: calc(12vh + 6rem);
     max-height: calc(74vh - 1.5rem);
   }
 }
@@ -1036,14 +1038,34 @@ body.page-enter .hero-cta,
 @media (max-width: 480px) {
   .work-tabs {
     top: 18vh;
-    gap: 1.5rem;
+    gap: clamp(0.75rem, 3vw, 1.25rem);
+    flex-wrap: wrap;
+    width: min(96vw, 22rem);
+  }
+
+  .work-page.work-page--photos .work-tabs,
+  .work-page.work-page--videos .work-tabs {
+    top: 10vh;
   }
 
   .work-content-panel {
-    top: calc(18vh + 3rem);
+    top: calc(18vh + 5.75rem);
     width: 96vw;
-    max-height: calc(76vh - 1rem);
+    max-height: calc(72vh - 1rem);
     padding: 0 0.5rem 1rem;
+  }
+
+  .work-page.work-page--photos .work-content-panel.is-visible,
+  .work-page.work-page--videos .work-content-panel.is-visible {
+    top: calc(10vh + 5.75rem);
+    max-height: calc(76vh - 1rem);
+  }
+
+  .work-tab.hero-cta {
+    font-size: clamp(0.95rem, 3.8vw, 1.2rem);
+    min-height: 3.25rem;
+    max-width: calc(50% - 0.5rem);
+    padding: 0.75rem clamp(0.85rem, 3vw, 1.25rem);
   }
 
   .work-media-grid {
