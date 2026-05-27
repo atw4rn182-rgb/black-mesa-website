@@ -4,6 +4,8 @@
   const DESKTOP_BP = "(min-width: 769px)";
 
   function isDesktopBg() {
+    /* Homepage logo is in the portrait clip — keep it on desktop too */
+    if (document.body.classList.contains("home-page")) return false;
     return window.matchMedia(DESKTOP_BP).matches;
   }
 

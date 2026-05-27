@@ -155,12 +155,58 @@ body {
     display: block;
   }
 
-  /* Homepage desktop — widescreen clip, slightly pulled back for more scene */
+  /* Homepage — portrait clip has the logo; widescreen clip does not */
+  .home-page .page-bg-video--portrait {
+    display: block;
+  }
+
   .home-page .page-bg-video--landscape {
-    object-fit: cover;
-    object-position: center top;
-    transform: scale(0.9);
-    transform-origin: center top;
+    display: none;
+  }
+}
+
+/* Homepage logo — always visible above background video */
+.hero-brand {
+  position: absolute;
+  top: clamp(0.85rem, 2.5vh, 1.75rem);
+  left: 50%;
+  z-index: 4;
+  transform: translateX(-50%);
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  background: rgba(6, 6, 8, 0.38);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+}
+
+.hero-logo {
+  display: block;
+  width: auto;
+  height: clamp(2.75rem, 10vw, 4.25rem);
+  max-width: min(88vw, 20rem);
+  object-fit: contain;
+  opacity: 1;
+  visibility: visible;
+  filter:
+    drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8))
+    drop-shadow(0 0 16px rgba(0, 0, 0, 0.45));
+}
+
+@media (min-width: 1024px) {
+  .hero-brand {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    top: clamp(1rem, 3vh, 2.25rem);
+    padding: 0.45rem 0.85rem;
+  }
+
+  .hero-logo {
+    height: clamp(3.25rem, 7.5vh, 5.25rem);
+    max-width: min(36rem, 38vw);
   }
 }
 
@@ -601,6 +647,7 @@ body.page-exit .page-bg-video {
   transition: opacity var(--page-fade-out-duration) var(--ease-fade);
 }
 
+body.page-exit .hero-brand,
 body.page-exit .hero-cta-layer,
 body.page-exit .hero-cta,
 .work-page.page-exit .work-tabs,
@@ -620,6 +667,7 @@ body.page-enter .page-bg-video {
     var(--page-fade-in-delay) forwards;
 }
 
+body.page-enter .hero-brand,
 body.page-enter .hero-cta-layer,
 body.page-enter .hero-cta,
 .work-page.page-enter .work-content-panel,
