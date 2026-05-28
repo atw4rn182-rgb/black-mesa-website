@@ -115,18 +115,17 @@ body {
   filter: var(--video-tone);
 }
 
-/* Homepage — frame desert scene; logo comes from .hero-logo only */
+/* Homepage hero background */
 .home-page .page-bg-video--portrait {
-  object-position: center 28%;
+  object-position: center center;
 }
 
 .home-page .hero-media .page-bg-overlay {
   background:
     linear-gradient(
       180deg,
-      rgba(8, 8, 10, 0.72) 0%,
-      rgba(8, 8, 10, 0.42) 14%,
-      var(--overlay-veil-mid) 36%,
+      rgba(8, 8, 10, 0.28) 0%,
+      var(--overlay-veil-mid) 38%,
       var(--overlay-veil-low) 62%,
       var(--overlay-veil-bottom) 100%
     ),
@@ -156,67 +155,59 @@ body {
     display: block;
   }
 
-  /* Homepage — portrait clip has the logo; widescreen clip does not */
-  .home-page .page-bg-video--portrait {
-    display: block;
-  }
-
+  /* Homepage desktop — pull widescreen clip back so it matches mobile framing */
   .home-page .page-bg-video--landscape {
-    display: none;
+    object-fit: cover;
+    object-position: center center;
+    transform: scale(0.88);
+    transform-origin: center center;
   }
 }
 
-/* Homepage logo — single clean mark above the video */
+/* Homepage title — only foreground element above the video besides CTAs */
 .hero-brand {
   position: absolute;
-  top: clamp(1rem, 3vh, 2rem);
+  top: clamp(1rem, 3vh, 2.5rem);
   left: 50%;
   z-index: 4;
   transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: min(92vw, 34rem);
+  width: min(92vw, 52rem);
   margin: 0;
   padding: 0;
+  text-align: center;
+  pointer-events: none;
   background: none;
   border: none;
   box-shadow: none;
   opacity: 1;
   visibility: visible;
-  pointer-events: none;
 }
 
-.hero-brand::before,
-.hero-brand::after {
-  content: none;
-  display: none;
-}
-
-.hero-logo {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: clamp(3.5rem, 11vh, 6.5rem);
-  object-fit: contain;
-  object-position: center top;
-  opacity: 1;
-  visibility: visible;
-  background: transparent;
-  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.65));
+.hero-brand-title {
+  margin: 0;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(1.65rem, 4.8vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 238, 0.96);
+  text-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.85),
+    0 0 36px rgba(0, 0, 0, 0.45);
 }
 
 @media (min-width: 1024px) {
   .hero-brand {
-    display: flex !important;
+    display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
-    top: clamp(1.25rem, 3.5vh, 2.5rem);
-    width: min(38vw, 40rem);
+    top: clamp(1.25rem, 3.5vh, 2.75rem);
   }
 
-  .hero-logo {
-    max-height: clamp(4.5rem, 9vh, 7rem);
+  .hero-brand-title {
+    font-size: clamp(2.25rem, 3.8vw, 3.5rem);
+    letter-spacing: 0.12em;
   }
 }
 

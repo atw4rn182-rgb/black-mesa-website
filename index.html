@@ -32,7 +32,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="preload" href="assets/hero-desert.mp4" as="video">
+  <link rel="preload" href="assets/hero-desert.mp4" as="video" media="(max-width: 768px)">
+  <link rel="preload" href="assets/hero-desert-wide.mp4" as="video" media="(min-width: 769px)">
   <link rel="prefetch" href="assets/bull-skull-wide.mp4" as="video">
   <script src="transition.js"></script>
 </head>
@@ -65,16 +66,9 @@
         </video>
       </div>
 
-      <div class="hero-brand">
-        <img
-          class="hero-logo"
-          src="assets/black-mesa-logo.jpg"
-          alt="Black Mesa Welding &amp; Machining"
-          width="520"
-          height="160"
-          decoding="async"
-        >
-      </div>
+      <header class="hero-brand">
+        <h1 class="hero-brand-title">Black Mesa Welding &amp; Machining Inc.</h1>
+      </header>
 
       <div class="hero-cta-layer" aria-label="Primary actions">
         <a href="work.html" class="hero-cta hero-cta--work btn-metallic" id="btnWork">
