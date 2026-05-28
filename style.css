@@ -137,7 +137,7 @@ body {
   filter: var(--video-tone);
 }
 
-/* Homepage hero background — full-bleed cover, no letterboxing */
+/* Homepage — portrait clip with baked-in branding; buttons only on top */
 .home-page .hero-media {
   position: absolute;
   inset: 0;
@@ -148,25 +148,20 @@ body {
   background: #0a0a0e;
 }
 
-.home-page .page-bg-video--portrait,
-.home-page .page-bg-video--landscape {
+.home-page .page-bg-video--portrait {
   object-fit: cover;
-  object-position: center center;
+  object-position: center top;
   width: 100%;
   height: 100%;
   min-width: 100%;
   min-height: 100%;
 }
 
-html.bm-desktop-bg .home-page .page-bg-video--portrait {
-  display: none !important;
-}
-
 .home-page .hero-media .page-bg-overlay {
   background:
     linear-gradient(
       180deg,
-      rgba(8, 8, 10, 0.22) 0%,
+      rgba(8, 8, 10, 0.06) 0%,
       var(--overlay-veil-mid) 38%,
       var(--overlay-veil-low) 62%,
       var(--overlay-veil-bottom) 100%
@@ -197,55 +192,9 @@ html.bm-desktop-bg .home-page .page-bg-video--portrait {
     display: block;
   }
 
-  /* Homepage desktop — fill viewport without black bars */
-  .home-page .page-bg-video--landscape {
-    object-fit: cover;
-    object-position: center center;
-    transform: none;
-  }
-}
-
-/* Homepage title — always visible; only text allowed above the video */
-.home-page .hero-brand {
-  position: absolute;
-  top: clamp(1rem, 3vh, 2.5rem);
-  left: 50%;
-  z-index: 4;
-  transform: translateX(-50%);
-  width: min(92vw, 52rem);
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  pointer-events: none;
-  background: none;
-  border: none;
-  box-shadow: none;
-  opacity: 1;
-  visibility: visible;
-}
-
-.home-page .hero-brand-title {
-  margin: 0;
-  font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(1.65rem, 4.8vw, 3.25rem);
-  font-weight: 400;
-  line-height: 1.12;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(248, 244, 238, 0.96);
-  text-shadow:
-    0 2px 14px rgba(0, 0, 0, 0.85),
-    0 0 36px rgba(0, 0, 0, 0.45);
-}
-
-@media (min-width: 1024px) {
-  .home-page .hero-brand {
-    top: clamp(1.25rem, 3.5vh, 2.75rem);
-  }
-
-  .home-page .hero-brand-title {
-    font-size: clamp(2.25rem, 3.8vw, 3.5rem);
-    letter-spacing: 0.12em;
+  /* Homepage — keep portrait clip on desktop so baked-in logo stays visible */
+  .home-page .page-bg-video--portrait {
+    display: block;
   }
 }
 
@@ -695,7 +644,6 @@ body.page-exit .page-bg-video {
   transition: opacity var(--page-fade-out-duration) var(--ease-fade);
 }
 
-body.page-exit .hero-brand,
 body.page-exit .hero-cta-layer,
 body.page-exit .hero-cta,
 .work-page.page-exit .work-tabs,
@@ -723,17 +671,6 @@ body.page-enter .hero-cta,
 .quote-page.page-enter .quote-form-column {
   opacity: 0;
   animation: contentFadeIn 0.85s var(--ease-cinematic) 0.28s forwards;
-}
-
-/* Homepage title stays visible during page transitions */
-.home-page.page-enter .hero-brand,
-.home-page.page-enter .hero-brand-title,
-html.bm-pre-enter .home-page .hero-brand,
-html.bm-pre-enter .home-page .hero-brand-title {
-  opacity: 1 !important;
-  visibility: visible !important;
-  animation: none !important;
-  transform: translateX(-50%) !important;
 }
 
 @keyframes videoFadeIn {

@@ -37,20 +37,12 @@
   navigateWithFade(btnWork);
   navigateWithFade(btnQuote);
 
-  if (portraitVideo && window.bmBgVideo?.isDesktopBg()) {
-    portraitVideo.preload = "none";
-    portraitVideo.pause();
-  }
-
   window.bmBgVideo?.syncBackgroundVideos(bgVideos);
 
   document.addEventListener(
     "touchstart",
     () => {
-      const active = window.bmBgVideo?.isDesktopBg()
-        ? landscapeVideo
-        : portraitVideo;
-      if (active?.paused) window.bmBgVideo?.initVideo(active);
+      if (portraitVideo?.paused) window.bmBgVideo?.initVideo(portraitVideo);
     },
     { once: true, passive: true }
   );
