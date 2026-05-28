@@ -115,16 +115,25 @@ body {
   filter: var(--video-tone);
 }
 
-/* Homepage hero background */
+/* Homepage hero background — video only, no foreground images */
+.home-page .hero-media {
+  background: var(--bg-deep);
+}
+
 .home-page .page-bg-video--portrait {
+  object-fit: cover;
   object-position: center center;
+}
+
+html.bm-desktop-bg .home-page .page-bg-video--portrait {
+  display: none !important;
 }
 
 .home-page .hero-media .page-bg-overlay {
   background:
     linear-gradient(
       180deg,
-      rgba(8, 8, 10, 0.28) 0%,
+      rgba(8, 8, 10, 0.22) 0%,
       var(--overlay-veil-mid) 38%,
       var(--overlay-veil-low) 62%,
       var(--overlay-veil-bottom) 100%
@@ -155,17 +164,16 @@ body {
     display: block;
   }
 
-  /* Homepage desktop — pull widescreen clip back so it matches mobile framing */
+  /* Homepage desktop — full widescreen frame, not over-cropped */
   .home-page .page-bg-video--landscape {
-    object-fit: cover;
+    object-fit: contain;
     object-position: center center;
-    transform: scale(0.88);
-    transform-origin: center center;
+    transform: none;
   }
 }
 
-/* Homepage title — only foreground element above the video besides CTAs */
-.hero-brand {
+/* Homepage title — always visible; only text allowed above the video */
+.home-page .hero-brand {
   position: absolute;
   top: clamp(1rem, 3vh, 2.5rem);
   left: 50%;
@@ -183,7 +191,7 @@ body {
   visibility: visible;
 }
 
-.hero-brand-title {
+.home-page .hero-brand-title {
   margin: 0;
   font-family: "Bebas Neue", sans-serif;
   font-size: clamp(1.65rem, 4.8vw, 3.25rem);
@@ -198,14 +206,11 @@ body {
 }
 
 @media (min-width: 1024px) {
-  .hero-brand {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+  .home-page .hero-brand {
     top: clamp(1.25rem, 3.5vh, 2.75rem);
   }
 
-  .hero-brand-title {
+  .home-page .hero-brand-title {
     font-size: clamp(2.25rem, 3.8vw, 3.5rem);
     letter-spacing: 0.12em;
   }
@@ -668,7 +673,6 @@ body.page-enter .page-bg-video {
     var(--page-fade-in-delay) forwards;
 }
 
-body.page-enter .hero-brand,
 body.page-enter .hero-cta-layer,
 body.page-enter .hero-cta,
 .work-page.page-enter .work-content-panel,
@@ -677,6 +681,17 @@ body.page-enter .hero-cta,
 .quote-page.page-enter .quote-form-column {
   opacity: 0;
   animation: contentFadeIn 0.85s var(--ease-cinematic) 0.28s forwards;
+}
+
+/* Homepage title stays visible during page transitions */
+.home-page.page-enter .hero-brand,
+.home-page.page-enter .hero-brand-title,
+html.bm-pre-enter .home-page .hero-brand,
+html.bm-pre-enter .home-page .hero-brand-title {
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: none !important;
+  transform: translateX(-50%) !important;
 }
 
 @keyframes videoFadeIn {

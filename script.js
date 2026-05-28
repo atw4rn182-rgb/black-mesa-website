@@ -37,6 +37,11 @@
   navigateWithFade(btnWork);
   navigateWithFade(btnQuote);
 
+  if (portraitVideo && window.bmBgVideo?.isDesktopBg()) {
+    portraitVideo.preload = "none";
+    portraitVideo.pause();
+  }
+
   window.bmBgVideo?.syncBackgroundVideos(bgVideos);
 
   document.addEventListener(
