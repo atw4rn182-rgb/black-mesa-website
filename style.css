@@ -115,17 +115,18 @@ body {
   filter: var(--video-tone);
 }
 
-/* Homepage — mobile portrait: anchor logo at top */
+/* Homepage — frame desert scene; logo comes from .hero-logo only */
 .home-page .page-bg-video--portrait {
-  object-position: center top;
+  object-position: center 28%;
 }
 
 .home-page .hero-media .page-bg-overlay {
   background:
     linear-gradient(
       180deg,
-      rgba(8, 8, 10, 0.06) 0%,
-      var(--overlay-veil-mid) 32%,
+      rgba(8, 8, 10, 0.72) 0%,
+      rgba(8, 8, 10, 0.42) 14%,
+      var(--overlay-veil-mid) 36%,
       var(--overlay-veil-low) 62%,
       var(--overlay-veil-bottom) 100%
     ),
@@ -165,48 +166,57 @@ body {
   }
 }
 
-/* Homepage logo — always visible above background video */
+/* Homepage logo — single clean mark above the video */
 .hero-brand {
   position: absolute;
-  top: clamp(0.85rem, 2.5vh, 1.75rem);
+  top: clamp(1rem, 3vh, 2rem);
   left: 50%;
   z-index: 4;
   transform: translateX(-50%);
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: min(92vw, 34rem);
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
   opacity: 1;
   visibility: visible;
   pointer-events: none;
-  padding: 0.35rem 0.7rem;
-  border-radius: 6px;
-  background: rgba(6, 6, 8, 0.38);
-  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+}
+
+.hero-brand::before,
+.hero-brand::after {
+  content: none;
+  display: none;
 }
 
 .hero-logo {
   display: block;
-  width: auto;
-  height: clamp(2.75rem, 10vw, 4.25rem);
-  max-width: min(88vw, 20rem);
+  width: 100%;
+  height: auto;
+  max-height: clamp(3.5rem, 11vh, 6.5rem);
   object-fit: contain;
+  object-position: center top;
   opacity: 1;
   visibility: visible;
-  filter:
-    drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8))
-    drop-shadow(0 0 16px rgba(0, 0, 0, 0.45));
+  background: transparent;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.65));
 }
 
 @media (min-width: 1024px) {
   .hero-brand {
-    display: block !important;
+    display: flex !important;
     opacity: 1 !important;
     visibility: visible !important;
-    top: clamp(1rem, 3vh, 2.25rem);
-    padding: 0.45rem 0.85rem;
+    top: clamp(1.25rem, 3.5vh, 2.5rem);
+    width: min(38vw, 40rem);
   }
 
   .hero-logo {
-    height: clamp(3.25rem, 7.5vh, 5.25rem);
-    max-width: min(36rem, 38vw);
+    max-height: clamp(4.5rem, 9vh, 7rem);
   }
 }
 
