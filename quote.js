@@ -1,6 +1,8 @@
 (function () {
   "use strict";
 
+  const QUOTE_REVEAL_DELAY_MS = 1600;
+
   const navHome = document.getElementById("navHome");
   const portraitVideo = document.getElementById("quoteVideoPortrait");
   const landscapeVideo = document.getElementById("quoteVideoLandscape");
@@ -8,6 +10,20 @@
   const formSuccess = document.getElementById("quoteFormSuccess");
 
   const bgVideos = { portrait: portraitVideo, landscape: landscapeVideo };
+
+  function revealQuoteContent() {
+    document.body.classList.add("is-quote-content-visible");
+  }
+
+  function scheduleQuoteReveal() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealQuoteContent();
+      return;
+    }
+    window.setTimeout(revealQuoteContent, QUOTE_REVEAL_DELAY_MS);
+  }
+
+  scheduleQuoteReveal();
 
   quoteForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -51,10 +67,7 @@
   document.addEventListener(
     "touchstart",
     () => {
-      const active = window.bmBgVideo?.isDesktopBg()
-        ? landscapeVideo
-        : portraitVideo;
-      if (active?.paused) window.bmBgVideo?.initVideo(active);
+      if (portraitVideo?.paused) window.bmBgVideo?.initVideo(portraitVideo);
     },
     { once: true, passive: true }
   );

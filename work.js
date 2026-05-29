@@ -89,10 +89,7 @@
     document.addEventListener(
       "touchstart",
       () => {
-        const active = window.bmBgVideo?.isDesktopBg()
-          ? landscapeVideo
-          : portraitVideo;
-        if (active?.paused) initVideo(active);
+        if (portraitVideo?.paused) initVideo(portraitVideo);
         projectVideos.forEach((v) => {
           if (v.paused) initVideo(v);
         });

@@ -135,48 +135,65 @@ body {
   object-position: center center;
   pointer-events: none;
   filter: var(--video-tone);
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 1;
 }
 
-/* Homepage hero — full bleed; portrait clip on all sizes (baked-in branding) */
-.home-page .hero-media {
+.page-bg-video--portrait {
+  display: block;
+  z-index: 1;
+  object-fit: cover;
+  object-position: center top;
+  width: 100%;
+  height: 100%;
+}
+
+.page-bg-video--landscape {
+  display: none;
+  z-index: 1;
+  object-fit: cover;
+  object-position: center 25%;
+  width: 100%;
+  height: 100%;
+}
+
+/* Background containers — full bleed, no clipping of baked-in video text */
+.hero-media,
+.work-bg,
+.quote-bg {
+  overflow: hidden;
+}
+
+.home-page .hero-media,
+.quote-page .quote-bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background: #0a0a0e;
 }
 
-.home-page .page-bg-video--portrait {
-  object-fit: cover;
-  object-position: center top;
-  width: 100%;
-  height: 100%;
-  min-width: 100%;
-  min-height: 100%;
-  opacity: 1;
-  visibility: visible;
+.work-page .work-bg {
+  background: #0a0a0e;
 }
 
-.page-bg-video--landscape {
-  display: none;
-  z-index: 0;
-  object-fit: cover;
-  object-position: center 30%;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-  visibility: visible;
+/* Light top overlay — do not cover baked-in branding text */
+.page-bg-overlay {
+  z-index: 2;
 }
 
-.home-page .hero-media .page-bg-overlay {
+.home-page .hero-media .page-bg-overlay,
+.work-page .work-bg .page-bg-overlay,
+.quote-page .quote-bg .page-bg-overlay {
   background:
     linear-gradient(
       180deg,
-      rgba(8, 8, 10, 0.06) 0%,
-      var(--overlay-veil-mid) 38%,
+      rgba(8, 8, 10, 0.04) 0%,
+      rgba(8, 8, 10, 0.1) 18%,
+      var(--overlay-veil-mid) 42%,
       var(--overlay-veil-low) 62%,
       var(--overlay-veil-bottom) 100%
     ),
@@ -185,11 +202,6 @@ body {
       transparent 0%,
       var(--overlay-vignette) 100%
     );
-}
-
-.page-bg-video--portrait {
-  display: block;
-  z-index: 0;
 }
 
 @media (min-width: 769px) {
@@ -201,9 +213,11 @@ body {
     display: block;
   }
 
-  /* Homepage desktop — portrait clip, pulled back so text and mountains match mobile */
-  .home-page .page-bg-video--portrait {
-    display: block;
+  /* All pages — portrait clip on desktop (baked-in branding); pulled back to match mobile */
+  .home-page .page-bg-video--portrait,
+  .work-page .page-bg-video--portrait,
+  .quote-page .page-bg-video--portrait {
+    display: block !important;
     object-fit: cover;
     object-position: center top;
     transform: scale(0.88);
@@ -214,17 +228,22 @@ body {
     visibility: visible !important;
   }
 
-  .home-page .page-bg-video--landscape {
-    display: none;
+  .home-page .page-bg-video--landscape,
+  .work-page .page-bg-video--landscape,
+  .quote-page .page-bg-video--landscape {
+    display: none !important;
   }
 }
 
-/* Keep homepage video visible during page transitions on wide screens */
-.home-page.page-enter .page-bg-video,
-.home-page.page-exit .page-bg-video,
-html.bm-pre-enter .home-page .page-bg-video {
-  opacity: 1;
-  visibility: visible;
+/* Keep background videos visible during load and page enter */
+html.bm-pre-enter .page-bg-video,
+body.page-enter .page-bg-video,
+.home-page .page-bg-video,
+.work-page .page-bg-video,
+.quote-page .page-bg-video {
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: none !important;
 }
 
 /* ── Hero — full viewport ─────────────────────────────────── */
@@ -627,7 +646,8 @@ html.bm-pre-enter .home-page .page-bg-video {
 
 /* ── Page transitions (crossfade between background videos) ─── */
 html.bm-pre-enter .page-bg-video {
-  opacity: 0;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 html.bm-pre-enter body::after {
@@ -685,19 +705,18 @@ body.page-exit .hero-cta,
   transition: opacity calc(var(--page-fade-out-duration) * 0.75) var(--ease-fade);
 }
 
-/* Enter — fade in destination background video */
+/* Enter — keep videos visible; only fade in UI content */
 body.page-enter .page-bg-video {
-  opacity: 0;
-  animation: videoFadeIn var(--page-fade-in-duration) var(--ease-cinematic)
-    var(--page-fade-in-delay) forwards;
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: none !important;
 }
 
 body.page-enter .hero-cta-layer,
 body.page-enter .hero-cta,
 .work-page.page-enter .work-content-panel,
 .work-page.page-enter .navbar,
-.quote-page.page-enter .navbar,
-.quote-page.page-enter .quote-form-column {
+.quote-page.page-enter .navbar {
   opacity: 0;
   animation: contentFadeIn 0.85s var(--ease-cinematic) 0.28s forwards;
 }
@@ -766,6 +785,28 @@ body.page-enter .hero-cta,
   height: var(--header-h);
   background-color: transparent;
   backdrop-filter: none;
+}
+
+/* Quote page — reveal form after 1600ms (see quote.js) */
+.quote-page .quote-form-column,
+.quote-page .navbar {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.45s var(--ease-cinematic),
+    visibility 0.45s var(--ease-cinematic);
+}
+
+.quote-page.is-quote-content-visible .quote-form-column,
+.quote-page.is-quote-content-visible .navbar {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.quote-page.is-quote-content-visible .quote-form-column {
+  animation: contentFadeIn 0.45s var(--ease-cinematic) forwards;
 }
 
 /* ── Get a Quote page — widescreen campfire bg ─────────────── */
