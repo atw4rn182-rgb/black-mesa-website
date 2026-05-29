@@ -153,7 +153,7 @@ body {
   display: none;
   z-index: 1;
   object-fit: cover;
-  object-position: center 25%;
+  object-position: center center;
   width: 100%;
   height: 100%;
 }
@@ -211,27 +211,11 @@ body {
 
   .page-bg-video--landscape {
     display: block;
-  }
-
-  /* All pages — portrait clip on desktop (baked-in branding); pulled back to match mobile */
-  .home-page .page-bg-video--portrait,
-  .work-page .page-bg-video--portrait,
-  .quote-page .page-bg-video--portrait {
-    display: block !important;
     object-fit: cover;
-    object-position: center top;
-    transform: scale(0.88);
-    transform-origin: center top;
+    object-position: center center;
     width: 100%;
     height: 100%;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  .home-page .page-bg-video--landscape,
-  .work-page .page-bg-video--landscape,
-  .quote-page .page-bg-video--landscape {
-    display: none !important;
+    transform: none;
   }
 }
 

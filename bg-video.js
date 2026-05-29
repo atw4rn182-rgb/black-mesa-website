@@ -4,8 +4,7 @@
   const DESKTOP_BP = "(min-width: 769px)";
 
   function isDesktopBg() {
-    /* Baked-in branding lives in portrait clips — use them on all screen sizes */
-    return false;
+    return window.matchMedia(DESKTOP_BP).matches;
   }
 
   function initVideo(video) {

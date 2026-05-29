@@ -67,7 +67,10 @@
   document.addEventListener(
     "touchstart",
     () => {
-      if (portraitVideo?.paused) window.bmBgVideo?.initVideo(portraitVideo);
+      const active = window.bmBgVideo?.isDesktopBg()
+        ? landscapeVideo
+        : portraitVideo;
+      if (active?.paused) window.bmBgVideo?.initVideo(active);
     },
     { once: true, passive: true }
   );
