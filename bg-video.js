@@ -4,6 +4,15 @@
   const DESKTOP_BP = "(min-width: 769px)";
 
   function isDesktopBg() {
+    /* Baked-in branding is in portrait clips — keep them on desktop too */
+    const body = document.body;
+    if (
+      body.classList.contains("home-page") ||
+      body.classList.contains("work-page") ||
+      body.classList.contains("quote-page")
+    ) {
+      return false;
+    }
     return window.matchMedia(DESKTOP_BP).matches;
   }
 
