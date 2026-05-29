@@ -4,7 +4,7 @@
   const DESKTOP_BP = "(min-width: 769px)";
 
   function isDesktopBg() {
-    /* Homepage branding is baked into the portrait clip — never swap videos */
+    /* Homepage branding is baked into the portrait clip */
     if (document.body.classList.contains("home-page")) return false;
     return window.matchMedia(DESKTOP_BP).matches;
   }
