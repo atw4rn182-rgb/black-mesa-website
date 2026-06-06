@@ -28,11 +28,18 @@
     if (deferred) {
       source.setAttribute("src", deferred);
       source.removeAttribute("data-src");
+      video.load();
     }
 
-    video.load();
     video.dataset.bgReady = "1";
   }
+
+  function pauseAllPortraitVideos() {
+    if (!isDesktopBg()) return;
+    document.querySelectorAll(".page-bg-video--portrait").forEach(pauseVideo);
+  }
+
+  pauseAllPortraitVideos();
 
   function syncBackgroundVideos(videos) {
     const { portrait, landscape } = videos;

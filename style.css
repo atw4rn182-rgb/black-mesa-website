@@ -158,10 +158,12 @@ body {
   height: 100%;
 }
 
-/* Hide portrait immediately on desktop before JS runs (see bm-desktop-bg in HTML head) */
+/* Hide portrait immediately on desktop — never show mobile clip on widescreen */
 html.bm-desktop-bg .page-bg-video--portrait {
   display: none !important;
   visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Background containers — full bleed, no clipping of baked-in video text */
@@ -214,6 +216,8 @@ html.bm-desktop-bg .page-bg-video--portrait {
   .page-bg-video--portrait {
     display: none !important;
     visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 
   .page-bg-video--landscape {
@@ -225,6 +229,24 @@ html.bm-desktop-bg .page-bg-video--portrait {
     transform: none;
     opacity: 1 !important;
     visibility: visible !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Keep landscape video visible during page transitions — no fade flash */
+  body.page-exit .page-bg-video--landscape,
+  body.page-enter .page-bg-video--landscape,
+  html.bm-pre-enter .page-bg-video--landscape {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  html.bm-pre-enter body::after,
+  body.page-enter::after {
+    opacity: 0 !important;
+    animation: none !important;
   }
 }
 
