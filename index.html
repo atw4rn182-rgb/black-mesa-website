@@ -36,6 +36,11 @@
   <link rel="preload" href="assets/hero-desert-wide.mp4" as="video" media="(min-width: 769px)">
   <link rel="prefetch" href="assets/bull-skull-wide.mp4" as="video">
   <script src="transition.js"></script>
+  <script>
+    if (window.matchMedia("(min-width: 769px)").matches) {
+      document.documentElement.classList.add("bm-desktop-bg");
+    }
+  </script>
 </head>
 <body class="home-page">
   <main>
@@ -49,7 +54,7 @@
           muted
           loop
           playsinline
-          preload="auto"
+          preload="none"
         >
           <source src="assets/hero-desert.mp4" type="video/mp4">
         </video>

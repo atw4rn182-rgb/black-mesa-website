@@ -4,10 +4,6 @@
   const DESKTOP_BP = "(min-width: 769px)";
 
   function isDesktopBg() {
-    /* Homepage branding is in the portrait clip; work/quote use 16:9 wide clips on desktop */
-    if (document.body.classList.contains("home-page")) {
-      return false;
-    }
     return window.matchMedia(DESKTOP_BP).matches;
   }
 
@@ -42,7 +38,10 @@
     const { portrait, landscape } = videos;
 
     if (isDesktopBg()) {
-      pauseVideo(portrait);
+      if (portrait) {
+        portrait.preload = "none";
+        pauseVideo(portrait);
+      }
       if (landscape) {
         ensureLandscapeLoaded(landscape);
         landscape.preload = "auto";

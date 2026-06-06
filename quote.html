@@ -29,8 +29,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="preload" href="assets/campfire.mp4" as="video" media="(max-width: 768px)">
-  <link rel="prefetch" href="assets/campfire-wide.mp4" as="video" media="(min-width: 769px)">
+  <link rel="preload" href="assets/campfire-wide.mp4" as="video" media="(min-width: 769px)">
   <script src="transition.js"></script>
+  <script>
+    if (window.matchMedia("(min-width: 769px)").matches) {
+      document.documentElement.classList.add("bm-desktop-bg");
+    }
+  </script>
 </head>
 <body class="quote-page">
   <header class="navbar">
@@ -48,7 +53,7 @@
           muted
           loop
           playsinline
-          preload="auto"
+          preload="none"
         >
           <source src="assets/campfire.mp4" type="video/mp4">
         </video>
