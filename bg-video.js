@@ -4,12 +4,8 @@
   const DESKTOP_BP = "(min-width: 769px)";
 
   function isDesktopBg() {
-    /* Work/quote branding is in portrait clips; homepage uses uploaded 16:9 wide clip */
-    const body = document.body;
-    if (
-      body.classList.contains("work-page") ||
-      body.classList.contains("quote-page")
-    ) {
+    /* Homepage branding is in the portrait clip; work/quote use 16:9 wide clips on desktop */
+    if (document.body.classList.contains("home-page")) {
       return false;
     }
     return window.matchMedia(DESKTOP_BP).matches;
