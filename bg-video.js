@@ -3,7 +3,16 @@
 
   const DESKTOP_BP = "(min-width: 769px)";
 
+  function usesPortraitOnDesktop() {
+    const body = document.body;
+    return (
+      body.classList.contains("home-page") ||
+      body.classList.contains("quote-page")
+    );
+  }
+
   function isDesktopBg() {
+    if (usesPortraitOnDesktop()) return false;
     return window.matchMedia(DESKTOP_BP).matches;
   }
 
@@ -11,8 +20,17 @@
     if (!video) return;
     video.muted = true;
     video.setAttribute("playsinline", "");
-    const play = () => video.play().catch(() => {});
+    const play = () => {
+      const attempt = video.play();
+      if (attempt && typeof attempt.catch === "function") {
+        attempt.catch(() => {});
+      }
+    };
     play();
+    if (video.paused) {
+      video.addEventListener("canplay", play, { once: true });
+      video.addEventListener("loadeddata", play, { once: true });
+    }
   }
 
   function pauseVideo(video) {
@@ -39,7 +57,13 @@
     document.querySelectorAll(".page-bg-video--portrait").forEach(pauseVideo);
   }
 
-  pauseAllPortraitVideos();
+  if (document.body) {
+    pauseAllPortraitVideos();
+  } else {
+    document.addEventListener("DOMContentLoaded", pauseAllPortraitVideos, {
+      once: true,
+    });
+  }
 
   function syncBackgroundVideos(videos) {
     const { portrait, landscape } = videos;
