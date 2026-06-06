@@ -4,10 +4,9 @@
   const DESKTOP_BP = "(min-width: 769px)";
 
   function isDesktopBg() {
-    /* Baked-in branding is in portrait clips — keep them on desktop too */
+    /* Work/quote branding is in portrait clips; homepage uses uploaded 16:9 wide clip */
     const body = document.body;
     if (
-      body.classList.contains("home-page") ||
       body.classList.contains("work-page") ||
       body.classList.contains("quote-page")
     ) {
