@@ -170,25 +170,30 @@
       const res = await fetch("assets/photos/manifest.json", { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
+    const priorityList = Array.isArray(data.priority) ? data.priority : [];
         const featuredList = Array.isArray(data.featured) ? data.featured : [];
         const galleryList = Array.isArray(data.photos) ? data.photos : [];
+        const seen = new Set();
 
+        const pushPhoto = (src, meta = {}) => {
+          if (!src || seen.has(src)) return;
+          seen.add(src);
+          entries.push({ type: "image", src, ...meta });
+        };
+
+        for (const src of priorityList) {
+          pushPhoto(src, { priority: true });
+        }
         for (const src of featuredList) {
-          entries.push({ type: "image", src, featured: true });
+          pushPhoto(src, { featured: true });
         }
         for (const src of galleryList) {
-          if (!featuredList.includes(src)) {
-            entries.push({ type: "image", src, featured: false });
-          }
+          pushPhoto(src, { featured: false });
         }
 
-        if (!featuredList.length && !galleryList.length && Array.isArray(data)) {
+        if (!priorityList.length && !featuredList.length && !galleryList.length && Array.isArray(data)) {
           for (const src of data) {
-            entries.push({
-              type: "image",
-              src,
-              featured: isFeaturedFilename(src),
-            });
+            pushPhoto(src, { featured: isFeaturedFilename(src) });
           }
         }
       }
@@ -197,10 +202,6 @@
     }
 
     if (entries.length) {
-      entries.sort((a, b) => {
-        if (a.featured !== b.featured) return a.featured ? -1 : 1;
-        return a.src.localeCompare(b.src, undefined, { sensitivity: "base" });
-      });
       return entries;
     }
 
